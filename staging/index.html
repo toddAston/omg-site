@@ -11,7 +11,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
 <meta name="theme-color" content="#2F6B4E" id="metaThemeColor">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -311,6 +311,13 @@ main{position:relative;z-index:1}
 .li-light{display:none}.li-dark{display:none}
 :root:not([data-skin="midnight"]):not([data-skin="surge"]):not([data-skin="serial"]):not([data-skin="nexus"]) .li-light{display:block}
 :root[data-skin="midnight"] .li-dark,:root[data-skin="surge"] .li-dark,:root[data-skin="serial"] .li-dark,:root[data-skin="nexus"] .li-dark{display:block}
+.wm-text{display:none;font-family:var(--display);font-weight:800;font-size:21px;color:var(--ink);align-items:center;gap:10px}
+.sticker-text{display:none;flex-direction:column;align-items:center;gap:2px}
+:root.noimg .wm,:root.noimg .sticker-img,:root.noimg .sakura-poster{display:none!important}
+:root.noimg .wm-text{display:flex}
+:root.noimg .sticker-text{display:flex}
+:root.noimg[data-skin="sakura"] .hand .pcard{display:flex}
+:root.noimg[data-skin="sakura"] .hand .omg-sticker{display:flex}
 .sakura-poster{display:none}
 :root[data-skin="sakura"] .hand .pcard,:root[data-skin="sakura"] .hand .omg-sticker{display:none}
 :root[data-skin="sakura"] .sakura-poster{display:block;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-3deg);max-height:104%;width:auto;max-width:88%;border-radius:14px;border:3px solid #fff;box-shadow:0 10px 32px rgba(200,90,130,.35)}
@@ -543,7 +550,7 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
 <main>
 <div class="wrap">
   <nav class="topbar" aria-label="Main">
-    <a class="wordmark" href="#top"><img class="wm li-light" src="assets/omg-black.png" alt="Off Meta Gaming"><img class="wm li-dark" src="assets/omg-white.png" alt="Off Meta Gaming"></a>
+    <a class="wordmark" href="#top"><img class="wm li-light" src="/assets/omg-black.png" alt="" onerror="document.documentElement.classList.add('noimg')"><img class="wm li-dark" src="/assets/omg-white.png" alt="" onerror="document.documentElement.classList.add('noimg')"><span class="wm-text"><span class="omg" aria-hidden="true">OMG</span>Off Meta Gaming</span></a>
     <div class="topnav">
       <a href="#play">What we play</a>
       <a href="#events">Events</a>
@@ -571,8 +578,8 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
     <div class="pcard c2"><span class="corner">M</span><span class="game">Magic: The&nbsp;Gathering</span><span class="corner b">M</span></div>
     <div class="pcard c3"><span class="corner">R</span><span class="game">Riftbound</span><span class="corner b">R</span></div>
     <div class="pcard c4"><span class="corner">Y</span><span class="game">Yu&#8209;Gi&#8209;Oh!</span><span class="corner b">Y</span></div>
-    <div class="omg-sticker"><img class="sticker-img li-light" src="assets/omg-black.png" alt=""><img class="sticker-img li-dark" src="assets/omg-white.png" alt=""></div>
-    <img class="sakura-poster" src="assets/sakura-hero.jpg" alt="">
+    <div class="omg-sticker"><img class="sticker-img li-light" src="/assets/omg-black.png" alt=""><img class="sticker-img li-dark" src="/assets/omg-white.png" alt=""><span class="sticker-text"><span class="omg-big">OMG</span><span class="sub">Off Meta Gaming</span></span></div>
+    <img class="sakura-poster" src="/assets/sakura-hero.jpg" alt="" onerror="document.documentElement.classList.add('noimg')">
   </div>
 </header>
 
