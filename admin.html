@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>OMG Shop Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600..900&family=Nunito+Sans:wght@400;700;800;900&display=swap">
+<style>
+:root{
+  --ground:#FAF6ED; --card:#FFFDF7; --ink:#28211A; --ink-2:#5A4F41; --ink-3:#8A7D6B;
+  --acc:#2F6B4E; --acc-deep:#24553D; --acc-soft:#E3EDE5; --pop:#C98F2D; --pop-soft:#F6E9CE;
+  --alt:#D8447C; --line:#DDD3C0; --line-2:#C9BCA4; --bad:#B03A2E; --bad-soft:#F4DAD3;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:"Nunito Sans",-apple-system,sans-serif;font-size:16px;line-height:1.6}
+.wrap{max-width:720px;margin:0 auto;padding:28px 20px 80px}
+h1{font-family:"Fraunces",serif;font-size:30px;margin:0 0 4px}
+h2{font-family:"Fraunces",serif;font-size:20px;margin:0 0 12px}
+.sub{color:var(--ink-2);margin:0 0 26px;font-size:15px}
+.panel{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:0 2px 12px rgba(60,45,20,.08)}
+label{display:block;font-weight:800;font-size:13.5px;margin-bottom:6px;color:var(--ink-2)}
+input[type=text],input[type=password],input[type=url],textarea,select{
+  width:100%;border:2px solid var(--line-2);border-radius:9px;padding:10px 12px;font:inherit;background:#fff;color:var(--ink)}
+textarea{min-height:90px;resize:vertical}
+input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--pop);outline-offset:2px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:end}
+.row>div{flex:1;min-width:120px}
+.btn{display:inline-block;border:none;border-radius:10px;padding:12px 22px;font:inherit;font-weight:800;cursor:pointer;background:var(--acc);color:#FDFBF5}
+.btn:hover{background:var(--acc-deep)}
+.btn.ghost{background:none;border:2px solid var(--line-2);color:var(--ink)}
+.btn.small{padding:7px 14px;font-size:13.5px}
+.btn.danger{background:none;border:2px solid var(--bad);color:var(--bad)}
+.hidden{display:none}
+.msg{border-radius:10px;padding:12px 16px;font-weight:700;font-size:14.5px;margin:14px 0 0}
+.msg.ok{background:var(--acc-soft);color:var(--acc-deep)}
+.msg.err{background:var(--bad-soft);color:var(--bad)}
+.hoursgrid{display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:8px 12px;align-items:center;font-variant-numeric:tabular-nums}
+.hoursgrid .dh{font-weight:900;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.evrow{border:1.5px dashed var(--line-2);border-radius:10px;padding:14px;margin-bottom:12px}
+.evrow .row{margin-bottom:10px}
+.checkline{display:flex;gap:10px;align-items:center;font-weight:800}
+.checkline input{width:20px;height:20px;accent-color:var(--acc)}
+.note{font-size:13px;color:var(--ink-3);margin-top:8px}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+a{color:var(--acc-deep)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topline">
+    <h1>🎴 Shop Admin</h1>
+    <a href="/" style="font-weight:800;font-size:14px">← back to the site</a>
+  </div>
+  <p class="sub">Edit the store facts below, then hit <strong>Publish</strong>. Changes go live for everyone in about a minute.</p>
+
+  <!-- ============ LOCK SCREEN ============ -->
+  <div class="panel" id="lockPanel">
+    <h2>Enter the shop password</h2>
+    <div class="row">
+      <div><input type="password" id="pass" autocomplete="current-password" placeholder="Password"></div>
+      <div style="flex:0"><button class="btn" id="unlockBtn">Unlock</button></div>
+    </div>
+    <div class="msg err hidden" id="lockMsg">That's not it — try again.</div>
+  </div>
+
+  <!-- ============ EDITOR ============ -->
+  <div id="editor" class="hidden">
+
+    <div class="panel">
+      <h2>📣 Announcement</h2>
+      <div class="checkline" style="margin-bottom:12px">
+        <input type="checkbox" id="anOn"><label for="anOn" style="margin:0">Show the announcement to visitors</label>
+      </div>
+      <label for="anText">Message</label>
+      <textarea id="anText" placeholder="e.g. Closed Thanksgiving Day — back Friday at 1 PM!"></textarea>
+      <p class="note">Shows as a pop-up when people open the site. Turn it off when it's over.</p>
+    </div>
+
+    <div class="panel">
+      <h2>🕐 Hours</h2>
+      <div class="hoursgrid" id="hoursGrid">
+        <div class="dh">Day</div><div class="dh">Closed?</div><div class="dh">Opens</div><div class="dh">Closes</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>🃏 Game nights</h2>
+      <div id="events"></div>
+      <button class="btn ghost small" id="addEvent">+ Add event</button>
+    </div>
+
+    <div class="panel">
+      <h2>📞 Contact &amp; socials</h2>
+      <div class="row" style="margin-bottom:12px"><div>
+        <label for="phone">Phone number</label>
+        <input type="text" id="phone" placeholder="(573) 803-0635">
+      </div></div>
+      <div id="socialInputs"></div>
+    </div>
+
+    <div class="panel">
+      <h2>🔑 Publish key</h2>
+      <div id="tokenHave" class="hidden">
+        <p style="margin:0 0 10px;font-weight:700">A publish key is saved on this device. ✓</p>
+        <button class="btn danger small" id="forgetToken">Forget key on this device</button>
+      </div>
+      <div id="tokenNeed">
+        <label for="token">Paste the publish key (Todd gives you this once)</label>
+        <input type="password" id="token" autocomplete="off" placeholder="github_pat_…">
+        <p class="note">Saved only in this browser. Anyone with this key can edit the site — treat it like the shop keys.</p>
+      </div>
+    </div>
+
+    <button class="btn" id="publishBtn" style="font-size:18px;padding:14px 30px">Publish to the site</button>
+    <div id="pubMsg"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var PASS_HASH="d7dbfd8e211f6b271ef2b0e44f1521e6075ff7fc35fb88177b037073c3103fb8";
+  var REPO="toddAston/omg-site", FILE="config.json";
+  var API="https://api.github.com/repos/"+REPO+"/contents/"+FILE;
+  var DAYS=[["mon","Monday"],["tue","Tuesday"],["wed","Wednesday"],["thu","Thursday"],["fri","Friday"],["sat","Saturday"],["sun","Sunday"]];
+  var NETS=[["discord","Discord invite"],["instagram","Instagram"],["tiktok","TikTok"],["x","X (Twitter)"],["facebook","Facebook"]];
+  var cfg=null;
+
+  function $(id){return document.getElementById(id)}
+  function sha256hex(str){
+    return crypto.subtle.digest("SHA-256",new TextEncoder().encode(str)).then(function(b){
+      return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("");
+    });
+  }
+
+  /* ---------- lock screen (convenience only — real authority is the publish key) ---------- */
+  function unlocked(){try{return sessionStorage.getItem("omgAdminUnlocked")==="1"}catch(e){return false}}
+  function tryUnlock(){
+    sha256hex($("pass").value.trim()).then(function(h){
+      if(h===PASS_HASH){
+        try{sessionStorage.setItem("omgAdminUnlocked","1")}catch(e){}
+        showEditor();
+      }else{$("lockMsg").classList.remove("hidden")}
+    });
+  }
+  $("unlockBtn").addEventListener("click",tryUnlock);
+  $("pass").addEventListener("keydown",function(e){if(e.key==="Enter")tryUnlock()});
+
+  /* ---------- editor ---------- */
+  function h12(h){var x=h%12;return x===0?12:x}
+  function hourOpts(sel){
+    var out="";for(var h=8;h<=23;h++){out+='<option value="'+h+'"'+(h===sel?" selected":"")+'>'+h12(h)+(h<12?" AM":" PM")+'</option>'}
+    return out;
+  }
+  function buildHours(){
+    var g=$("hoursGrid");
+    DAYS.forEach(function(d){
+      var key=d[0], day=cfg.hours[key]||{closed:true};
+      var row=document.createElement("template");
+      row.innerHTML='<div class="dh" style="text-transform:none;font-size:14px;color:var(--ink)">'+d[1]+'</div>'
+        +'<div><input type="checkbox" data-closed="'+key+'"'+(day.closed?" checked":"")+' style="width:20px;height:20px;accent-color:var(--acc)"></div>'
+        +'<div><select data-open="'+key+'">'+hourOpts(day.open||13)+'</select></div>'
+        +'<div><select data-close="'+key+'">'+hourOpts(day.close||21)+'</select></div>';
+      while(row.content.firstChild)g.appendChild(row.content.firstChild);
+    });
+  }
+  function evRow(ev){
+    var d=document.createElement("div");d.className="evrow";
+    d.innerHTML='<div class="row"><div><label>When</label><input type="text" data-f="when" value=""></div>'
+      +'<div><label>Name</label><input type="text" data-f="name" value=""></div></div>'
+      +'<div><label>Short description</label><input type="text" data-f="desc" value=""></div>'
+      +'<div class="row" style="margin-top:10px;align-items:center"><div class="checkline" style="flex:2"><input type="checkbox" data-f="live"'+(ev.live?" checked":"")+'><span>Happening now (highlighted)</span></div>'
+      +'<div style="flex:0"><button class="btn danger small" data-del>Remove</button></div></div>';
+    d.querySelector('[data-f="when"]').value=ev.when||"";
+    d.querySelector('[data-f="name"]').value=ev.name||"";
+    d.querySelector('[data-f="desc"]').value=ev.desc||"";
+    d.querySelector("[data-del]").addEventListener("click",function(){d.remove()});
+    return d;
+  }
+  function buildEditor(){
+    $("anOn").checked=!!cfg.announcement.enabled;
+    $("anText").value=cfg.announcement.text||"";
+    buildHours();
+    cfg.events.forEach(function(ev){$("events").appendChild(evRow(ev))});
+    $("addEvent").addEventListener("click",function(){$("events").appendChild(evRow({live:true}))});
+    $("phone").value=cfg.phone||"";
+    NETS.forEach(function(n){
+      var d=document.createElement("div");d.style.marginBottom="12px";
+      d.innerHTML='<label>'+n[1]+'</label><input type="url" data-net="'+n[0]+'" value="">';
+      d.querySelector("input").value=(cfg.socials&&cfg.socials[n[0]])||"";
+      $("socialInputs").appendChild(d);
+    });
+    refreshTokenUI();
+  }
+  function collect(){
+    var out=JSON.parse(JSON.stringify(cfg));
+    var now=new Date().toISOString();
+    var anChanged=(out.announcement.text!==$("anText").value)||(!!out.announcement.enabled!==$("anOn").checked);
+    out.announcement={enabled:$("anOn").checked,text:$("anText").value,updatedAt:anChanged?now:(cfg.announcement.updatedAt||now)};
+    out.hours={};
+    DAYS.forEach(function(d){var k=d[0];
+      if(document.querySelector('[data-closed="'+k+'"]').checked)out.hours[k]={closed:true};
+      else out.hours[k]={open:parseInt(document.querySelector('[data-open="'+k+'"]').value,10),
+                         close:parseInt(document.querySelector('[data-close="'+k+'"]').value,10)};
+    });
+    out.events=Array.from(document.querySelectorAll(".evrow")).map(function(r){
+      return {when:r.querySelector('[data-f="when"]').value.trim(),
+              name:r.querySelector('[data-f="name"]').value.trim(),
+              desc:r.querySelector('[data-f="desc"]').value.trim(),
+              live:r.querySelector('[data-f="live"]').checked};
+    }).filter(function(e){return e.name});
+    out.phone=$("phone").value.trim();
+    out.socials={};
+    NETS.forEach(function(n){out.socials[n[0]]=document.querySelector('input[data-net="'+n[0]+'"]').value.trim()});
+    out.updatedAt=now;
+    return out;
+  }
+
+  /* ---------- token ---------- */
+  function getToken(){try{return localStorage.getItem("omgAdminToken")||""}catch(e){return ""}}
+  function setToken(t){try{t?localStorage.setItem("omgAdminToken",t):localStorage.removeItem("omgAdminToken")}catch(e){}}
+  function refreshTokenUI(){
+    var have=!!getToken();
+    $("tokenHave").classList.toggle("hidden",!have);
+    $("tokenNeed").classList.toggle("hidden",have);
+  }
+  $("forgetToken").addEventListener("click",function(){setToken("");refreshTokenUI()});
+
+  /* ---------- publish: single commit, converged error contract ---------- */
+  function msg(kind,text){$("pubMsg").innerHTML='<div class="msg '+kind+'">'+text+'</div>'}
+  function b64(str){return btoa(unescape(encodeURIComponent(str)))}
+  function ghGET(token){
+    return fetch(API+"?t="+Date.now(),{headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json"}});
+  }
+  function ghPUT(token,sha,content){
+    return fetch(API,{method:"PUT",headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json"},
+      body:JSON.stringify({message:"Shop admin: update store facts",content:b64(content),sha:sha})});
+  }
+  function authFail(){
+    setToken("");refreshTokenUI();
+    msg("err","That publish key didn't work — it may have expired. Paste a fresh one from Todd and hit Publish again. Your edits are still here.");
+  }
+  $("publishBtn").addEventListener("click",function(){
+    var typed=$("token")?$("token").value.trim():"";
+    var token=getToken()||typed;
+    if(!token){msg("err","Paste the publish key first (Todd has it).");return}
+    var data=JSON.stringify(collect(),null,2);
+    msg("ok","Publishing…");
+    ghGET(token).then(function(r){
+      if(r.status===401||r.status===403){authFail();throw"handled"}
+      if(!r.ok)throw"GitHub error "+r.status;
+      return r.json();
+    }).then(function(j){
+      return ghPUT(token,j.sha,data).then(function(r){
+        if(r.status===401||r.status===403){authFail();throw"handled"}
+        if(r.status===409){ /* stale sha — refetch and retry exactly once */
+          return ghGET(token).then(function(r2){return r2.json()}).then(function(j2){return ghPUT(token,j2.sha,data)});
+        }
+        return r;
+      });
+    }).then(function(r){
+      if(!r||!r.ok)throw"GitHub error "+(r&&r.status);
+      if(typed)setToken(typed);
+      refreshTokenUI();
+      cfg=collect();
+      msg("ok","✅ Published! The site updates for everyone in about a minute.");
+    }).catch(function(e){
+      if(e!=="handled")msg("err","Couldn't publish — check the internet connection and try again. Your edits are still here. ("+e+")");
+    });
+  });
+
+  /* ---------- boot ---------- */
+  function showEditor(){
+    $("lockPanel").classList.add("hidden");
+    fetch("config.json",{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){
+      cfg=j;buildEditor();$("editor").classList.remove("hidden");
+    }).catch(function(){
+      msg("err","Couldn't load the current settings — refresh and try again.");
+      $("editor").classList.remove("hidden");
+    });
+  }
+  if(unlocked())showEditor();
+})();
+</script>
+</body>
+</html>

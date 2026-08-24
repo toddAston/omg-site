@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "updatedAt": "2026-08-24T21:30:00Z",
+  "announcement": {
+    "enabled": false,
+    "text": "",
+    "updatedAt": "2026-08-24T21:30:00Z"
+  },
+  "hours": {
+    "mon": {
+      "closed": true
+    },
+    "tue": {
+      "open": 13,
+      "close": 18
+    },
+    "wed": {
+      "open": 13,
+      "close": 21
+    },
+    "thu": {
+      "open": 13,
+      "close": 21
+    },
+    "fri": {
+      "open": 13,
+      "close": 21
+    },
+    "sat": {
+      "open": 13,
+      "close": 21
+    },
+    "sun": {
+      "open": 13,
+      "close": 18
+    }
+  },
+  "phone": "(573) 803-0635",
+  "events": [
+    {
+      "when": "Every Sunday · 2 PM",
+      "name": "Nexus Nights",
+      "desc": "Riftbound 1v1, Swiss format. Bring a deck, claim the Nexus.",
+      "live": true
+    },
+    {
+      "when": "Daily · specials Fri & Sat",
+      "name": "Magic at the tables",
+      "desc": "Magic plays every day we're open, with special events on the weekend.",
+      "live": true
+    },
+    {
+      "when": "Being reworked",
+      "name": "Pokémon league",
+      "desc": "New league details drop on the socials soon.",
+      "live": false
+    }
+  ],
+  "socials": {
+    "discord": "https://discord.gg/c3nWQ8a9ea",
+    "instagram": "https://www.instagram.com/offmetasocials",
+    "tiktok": "https://www.tiktok.com/@offmetasocials",
+    "x": "https://x.com/offmetasocials",
+    "facebook": "https://www.facebook.com/p/Off-Meta-Gaming-61579627653873/"
+  }
+}
