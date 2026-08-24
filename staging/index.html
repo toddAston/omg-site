@@ -61,6 +61,19 @@
   --display:"Fraunces","Georgia",serif;
   --accent-font:"Fraunces",serif;
 }
+:root[data-skin="karp"]{
+  --ground:#F9E9B8; --ground-2:#F3DC92; --card:#FFF9E3;
+  --ink:#4A3608; --ink-2:#7A5F1D; --ink-3:#A08745;
+  --acc:#B8860B; --acc-deep:#8F6A08; --acc-soft:#F3E3AC;
+  --pop:#C23A14; --pop-soft:#F9DCD0;
+  --alt:#8A6A15; --alt-soft:#F0E4BC;
+  --line:#E8D189; --line-2:#CDB05E;
+  --btn-ink:#FFFDF0;
+  --shadow:0 4px 22px rgba(160,120,20,.3);
+  --radius:18px;
+  --display:"Fraunces","Georgia",serif;
+  --accent-font:"Fraunces",serif;
+}
 :root[data-skin="retro"]{
   --ground:#F4E8C1; --ground-2:#EAD9A6; --card:#FBF3D8;
   --ink:#2A2314; --ink-2:#5C4F2E; --ink-3:#8A7A50;
@@ -174,7 +187,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var
 
 /* ============ FOIL / TREATMENT LAYERS ============ */
 /* generic decorative layers, enabled per skin */
-.petals,.retro-dots,.retro-frame,.retro-badge,.sheen,.fullart,.stars,.nebula,.serial-fixed,.one-stamp,.spark{display:none}
+.petals,.retro-dots,.retro-frame,.retro-badge,.sheen,.fullart,.stars,.nebula,.serial-fixed,.one-stamp,.spark,.karps,.karp-stamp{display:none}
 main{position:relative;z-index:1}
 
 /* --- sakura: falling petals --- */
@@ -310,11 +323,28 @@ main{position:relative;z-index:1}
 :root[data-skin="gold"] .spark{display:block;position:fixed;pointer-events:none;font-size:18px;color:var(--acc);animation:tw 3s ease-in-out infinite;z-index:0}
 @keyframes tw{0%,100%{opacity:.2;transform:scale(.85)}50%{opacity:.95;transform:scale(1.15)}}
 
+/* --- golden karp: EXCESSIVE. gold everything + flying karps --- */
+:root[data-skin="karp"] body{background-image:radial-gradient(80% 55% at 50% -10%,rgba(255,215,80,.55),transparent 70%),radial-gradient(1.5px 1.5px at 40px 60px,rgba(210,170,40,.35),transparent),radial-gradient(1.5px 1.5px at 160px 140px,rgba(210,170,40,.3),transparent);background-size:auto,220px 200px,220px 200px}
+:root[data-skin="karp"] .sheen{display:block;position:fixed;inset:0;z-index:40;pointer-events:none;mix-blend-mode:overlay;opacity:.85;
+  background:linear-gradient(115deg,transparent 15%,rgba(255,60,60,.4) 30%,rgba(255,215,0,.5) 45%,rgba(255,255,200,.45) 52%,rgba(255,215,0,.5) 60%,rgba(255,120,0,.4) 72%,transparent 88%);
+  background-size:300% 300%;animation:pan 5s ease-in-out infinite}
+:root[data-skin="karp"] .spark{display:block;position:fixed;pointer-events:none;font-size:26px;color:#D4AF37;animation:tw 1.8s ease-in-out infinite;z-index:41;text-shadow:0 0 12px rgba(255,215,0,.8)}
+:root[data-skin="karp"] .card,
+:root[data-skin="karp"] .event,
+:root[data-skin="karp"] .hours{border-color:#C9A227;background-image:linear-gradient(135deg,rgba(255,80,40,.07),rgba(255,215,0,.12) 30%,rgba(255,255,200,.1) 50%,rgba(255,215,0,.12) 70%,rgba(200,120,0,.08))}
+:root[data-skin="karp"] h2{background:linear-gradient(100deg,#8F6A08 5%,#D4AF37 25%,#FFF3C2 40%,#D2461E 52%,#FFF3C2 64%,#D4AF37 78%,#8F6A08 95%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 3.5s linear infinite}
+:root[data-skin="karp"] .omg-sticker{background:linear-gradient(145deg,#B08D2A,#F5C33B 35%,#FFF3C2 50%,#F5C33B 65%,#B08D2A);border-color:#6E5511;animation:tw 3s ease-in-out infinite}
+:root[data-skin="karp"] .karps{display:block;position:fixed;inset:0;pointer-events:none;z-index:42;overflow:hidden}
+.karp{position:absolute;left:0;top:0;will-change:transform;animation:karpfly linear infinite}
+@keyframes karpfly{0%{transform:translate(-18vw,108vh) rotate(-30deg)}50%{transform:translate(48vw,42vh) rotate(180deg)}100%{transform:translate(118vw,-18vh) rotate(390deg)}}
+:root[data-skin="karp"] .karp-stamp{display:block;position:fixed;right:18px;bottom:18px;z-index:46;pointer-events:none;font-family:"IBM Plex Mono",monospace;font-weight:700;font-size:13px;letter-spacing:.18em;color:#4A3608;background:linear-gradient(120deg,#F5C33B,#FFF0B0,#F5C33B);border:2px solid #C23A14;padding:8px 14px;border-radius:6px;box-shadow:0 0 18px rgba(255,215,0,.6)}
+
 /* holo headline span — per-skin foil treatments */
 :root[data-skin="midnight"] .holo{background:linear-gradient(100deg,#8E96B8 15%,#EAEEFF 45%,#8E96B8 75%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 7s linear infinite}
 :root[data-skin="surge"] .holo{background:linear-gradient(100deg,#57E6C4,#9FA8FF 45%,#FF7ED2 80%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 6s linear infinite}
 :root[data-skin="gold"] .holo{background:linear-gradient(100deg,#5C4708 5%,#876710 30%,#9C7717 50%,#876710 70%,#5C4708 95%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 6s linear infinite}
 :root[data-skin="serial"] .holo{background:linear-gradient(100deg,#8A6F1C 10%,#E8C963 45%,#FFF3C2 52%,#E8C963 60%,#8A6F1C 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+:root[data-skin="karp"] .holo{background:linear-gradient(100deg,#8F6A08,#D4AF37 25%,#FFF3C2 42%,#D2461E 52%,#FFF3C2 62%,#D4AF37 78%,#8F6A08 95%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 3s linear infinite}
 :root[data-skin="nexus"] .holo{background:linear-gradient(100deg,#7FF7E3,#B7A6FF 35%,#FF8FD8 65%,#7FF7E3 95%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 4.5s linear infinite}
 @keyframes sheen{0%{background-position:0 0}100%{background-position:220% 0}}
 
@@ -486,6 +516,7 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
 .r-rare{background:#DCE4F5;color:#2E4E9E}
 .r-secret{background:linear-gradient(100deg,#F3E3AC,#FFF6D8,#F3E3AC);color:#7A5D10}
 .r-serial{background:#141414;color:#E8C963;border:1px solid #D4AF37}
+.r-shiny{background:linear-gradient(100deg,#F5C33B,#FFF0B0 50%,#F5C33B);background-size:200% 100%;color:#7A2A0E;border:1px solid #D2461E;animation:sheen 2.5s linear infinite}
 .r-one{background:linear-gradient(100deg,#FFD6E8,#D6FFF3 45%,#DAD6FF 75%,#FFD6E8);color:#3A2B4E;background-size:200% 100%;animation:sheen 3s linear infinite}
 .pull-toast .pt-row{display:flex;gap:8px;flex-wrap:wrap}
 .pull-toast .mini{font-size:13.5px;font-weight:800;padding:8px 14px;border-radius:999px;border:2px solid var(--line-2);background:transparent;color:var(--ink);cursor:pointer;font-family:"Nunito Sans",sans-serif}
@@ -500,7 +531,7 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
 /* Roll the skin BEFORE first paint of the body content. Weights are basis points (of 10,000). */
 (function(){
   var SKINS=[
-    {id:"classic", name:"Classic",        rarity:"Common",      cls:"r-common",   w:4100, pct:"41%",    tc:"#2F6B4E"},
+    {id:"classic", name:"Classic",        rarity:"Common",      cls:"r-common",   w:4090, pct:"40.9%",  tc:"#2F6B4E"},
     {id:"sakura",  name:"Sakura",         rarity:"Uncommon",    cls:"r-uncommon", w:2300, pct:"23%",    tc:"#E85D8A"},
     {id:"beach",   name:"Beach Day",      rarity:"Uncommon",    cls:"r-uncommon", w:1200, pct:"12%",    tc:"#1FA5A0"},
     {id:"retro",   name:"Retro '99",      rarity:"Uncommon",    cls:"r-uncommon", w:1000, pct:"10%",    tc:"#F5C518"},
@@ -508,10 +539,11 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
     {id:"surge",   name:"Surge Foil",     rarity:"Rare",        cls:"r-rare",     w:400,  pct:"4%",     tc:"#0E1230"},
     {id:"gold",    name:"Gold Holo",      rarity:"Secret Rare", cls:"r-secret",   w:150,  pct:"1.5%",   tc:"#C9A227"},
     {id:"serial",  name:"Serialized",     rarity:"Serialized",  cls:"r-serial",   w:45,   pct:"0.45%",  tc:"#0F0F0F"},
+    {id:"karp",    name:"Golden Karp",    rarity:"Shiny",       cls:"r-shiny",    w:10,   pct:"0.1%",   tc:"#F5C33B"},
     {id:"nexus",   name:"The Nexus",      rarity:"One of One",  cls:"r-one",      w:5,    pct:"0.05%",  tc:"#05040F"}
   ];
   function byId(id){for(var i=0;i<SKINS.length;i++)if(SKINS[i].id===id)return SKINS[i];return null}
-  var RARE={midnight:1,surge:1,gold:1,serial:1,nexus:1};
+  var RARE={midnight:1,surge:1,gold:1,serial:1,nexus:1,karp:1};
   function loadPity(){try{return parseInt(localStorage.getItem("omgPity")||"0",10)||0}catch(e){return 0}}
   function savePity(n){try{localStorage.setItem("omgPity",String(n))}catch(e){}}
   /* Real pull. Pity rule: 6 dry pulls without a Rare+ guarantee the next is Rare+. */
@@ -562,6 +594,8 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
 <span class="spark" style="top:30%;right:8%;animation-delay:1s" aria-hidden="true">✦</span>
 <span class="spark" style="bottom:26%;left:12%;animation-delay:2s" aria-hidden="true">✦</span>
 <span class="spark" style="bottom:40%;right:14%;animation-delay:1.6s" aria-hidden="true">✦</span>
+<div class="karps" aria-hidden="true"><svg class="karp" style="width:150px;animation-duration:11s;animation-delay:-0s" viewBox="0 0 130 95" aria-hidden="true"><g stroke="#8A5A0A" stroke-width="3.5" stroke-linejoin="round"><path fill="#F5C33B" d="M86 48 L118 26 L108 48 L118 70 Z"/><path fill="#F5C33B" d="M50 24 Q56 2 74 16 Q80 22 70 30 Z"/><ellipse fill="#F5C33B" cx="55" cy="50" rx="33" ry="25"/><path fill="#EFB42C" d="M52 74 Q60 90 72 76 Q64 72 52 74 Z"/><path fill="#EFB42C" d="M56 52 q12 6 22 0 q-6 12 -22 8 Z"/><ellipse fill="#FFFFFF" cx="38" cy="44" rx="8" ry="9"/><circle fill="#2A1B06" cx="39.5" cy="45.5" r="4"/><path fill="#F5C33B" d="M25 50 Q13 44 20 38 Q10 46 16 56 Q22 62 28 56 Z"/><path fill="none" d="M24 60 Q14 70 20 80"/><path fill="none" d="M30 62 Q26 72 32 80"/></g></svg><svg class="karp" style="width:90px;animation-duration:8s;animation-delay:-3s" viewBox="0 0 130 95" aria-hidden="true"><g stroke="#8A5A0A" stroke-width="3.5" stroke-linejoin="round"><path fill="#F5C33B" d="M86 48 L118 26 L108 48 L118 70 Z"/><path fill="#F5C33B" d="M50 24 Q56 2 74 16 Q80 22 70 30 Z"/><ellipse fill="#F5C33B" cx="55" cy="50" rx="33" ry="25"/><path fill="#EFB42C" d="M52 74 Q60 90 72 76 Q64 72 52 74 Z"/><path fill="#EFB42C" d="M56 52 q12 6 22 0 q-6 12 -22 8 Z"/><ellipse fill="#FFFFFF" cx="38" cy="44" rx="8" ry="9"/><circle fill="#2A1B06" cx="39.5" cy="45.5" r="4"/><path fill="#F5C33B" d="M25 50 Q13 44 20 38 Q10 46 16 56 Q22 62 28 56 Z"/><path fill="none" d="M24 60 Q14 70 20 80"/><path fill="none" d="M30 62 Q26 72 32 80"/></g></svg><svg class="karp" style="width:200px;animation-duration:15s;animation-delay:-6s" viewBox="0 0 130 95" aria-hidden="true"><g stroke="#8A5A0A" stroke-width="3.5" stroke-linejoin="round"><path fill="#F5C33B" d="M86 48 L118 26 L108 48 L118 70 Z"/><path fill="#F5C33B" d="M50 24 Q56 2 74 16 Q80 22 70 30 Z"/><ellipse fill="#F5C33B" cx="55" cy="50" rx="33" ry="25"/><path fill="#EFB42C" d="M52 74 Q60 90 72 76 Q64 72 52 74 Z"/><path fill="#EFB42C" d="M56 52 q12 6 22 0 q-6 12 -22 8 Z"/><ellipse fill="#FFFFFF" cx="38" cy="44" rx="8" ry="9"/><circle fill="#2A1B06" cx="39.5" cy="45.5" r="4"/><path fill="#F5C33B" d="M25 50 Q13 44 20 38 Q10 46 16 56 Q22 62 28 56 Z"/><path fill="none" d="M24 60 Q14 70 20 80"/><path fill="none" d="M30 62 Q26 72 32 80"/></g></svg><svg class="karp" style="width:70px;animation-duration:7s;animation-delay:-1.5s" viewBox="0 0 130 95" aria-hidden="true"><g stroke="#8A5A0A" stroke-width="3.5" stroke-linejoin="round"><path fill="#F5C33B" d="M86 48 L118 26 L108 48 L118 70 Z"/><path fill="#F5C33B" d="M50 24 Q56 2 74 16 Q80 22 70 30 Z"/><ellipse fill="#F5C33B" cx="55" cy="50" rx="33" ry="25"/><path fill="#EFB42C" d="M52 74 Q60 90 72 76 Q64 72 52 74 Z"/><path fill="#EFB42C" d="M56 52 q12 6 22 0 q-6 12 -22 8 Z"/><ellipse fill="#FFFFFF" cx="38" cy="44" rx="8" ry="9"/><circle fill="#2A1B06" cx="39.5" cy="45.5" r="4"/><path fill="#F5C33B" d="M25 50 Q13 44 20 38 Q10 46 16 56 Q22 62 28 56 Z"/><path fill="none" d="M24 60 Q14 70 20 80"/><path fill="none" d="M30 62 Q26 72 32 80"/></g></svg><svg class="karp" style="width:120px;animation-duration:10s;animation-delay:-8s" viewBox="0 0 130 95" aria-hidden="true"><g stroke="#8A5A0A" stroke-width="3.5" stroke-linejoin="round"><path fill="#F5C33B" d="M86 48 L118 26 L108 48 L118 70 Z"/><path fill="#F5C33B" d="M50 24 Q56 2 74 16 Q80 22 70 30 Z"/><ellipse fill="#F5C33B" cx="55" cy="50" rx="33" ry="25"/><path fill="#EFB42C" d="M52 74 Q60 90 72 76 Q64 72 52 74 Z"/><path fill="#EFB42C" d="M56 52 q12 6 22 0 q-6 12 -22 8 Z"/><ellipse fill="#FFFFFF" cx="38" cy="44" rx="8" ry="9"/><circle fill="#2A1B06" cx="39.5" cy="45.5" r="4"/><path fill="#F5C33B" d="M25 50 Q13 44 20 38 Q10 46 16 56 Q22 62 28 56 Z"/><path fill="none" d="M24 60 Q14 70 20 80"/><path fill="none" d="M30 62 Q26 72 32 80"/></g></svg><svg class="karp" style="width:60px;animation-duration:6s;animation-delay:-4.5s" viewBox="0 0 130 95" aria-hidden="true"><g stroke="#8A5A0A" stroke-width="3.5" stroke-linejoin="round"><path fill="#F5C33B" d="M86 48 L118 26 L108 48 L118 70 Z"/><path fill="#F5C33B" d="M50 24 Q56 2 74 16 Q80 22 70 30 Z"/><ellipse fill="#F5C33B" cx="55" cy="50" rx="33" ry="25"/><path fill="#EFB42C" d="M52 74 Q60 90 72 76 Q64 72 52 74 Z"/><path fill="#EFB42C" d="M56 52 q12 6 22 0 q-6 12 -22 8 Z"/><ellipse fill="#FFFFFF" cx="38" cy="44" rx="8" ry="9"/><circle fill="#2A1B06" cx="39.5" cy="45.5" r="4"/><path fill="#F5C33B" d="M25 50 Q13 44 20 38 Q10 46 16 56 Q22 62 28 56 Z"/><path fill="none" d="M24 60 Q14 70 20 80"/><path fill="none" d="M30 62 Q26 72 32 80"/></g></svg><svg class="karp" style="width:170px;animation-duration:13s;animation-delay:-10s" viewBox="0 0 130 95" aria-hidden="true"><g stroke="#8A5A0A" stroke-width="3.5" stroke-linejoin="round"><path fill="#F5C33B" d="M86 48 L118 26 L108 48 L118 70 Z"/><path fill="#F5C33B" d="M50 24 Q56 2 74 16 Q80 22 70 30 Z"/><ellipse fill="#F5C33B" cx="55" cy="50" rx="33" ry="25"/><path fill="#EFB42C" d="M52 74 Q60 90 72 76 Q64 72 52 74 Z"/><path fill="#EFB42C" d="M56 52 q12 6 22 0 q-6 12 -22 8 Z"/><ellipse fill="#FFFFFF" cx="38" cy="44" rx="8" ry="9"/><circle fill="#2A1B06" cx="39.5" cy="45.5" r="4"/><path fill="#F5C33B" d="M25 50 Q13 44 20 38 Q10 46 16 56 Q22 62 28 56 Z"/><path fill="none" d="M24 60 Q14 70 20 80"/><path fill="none" d="M30 62 Q26 72 32 80"/></g></svg></div>
+<div class="karp-stamp" aria-hidden="true">✨ GOLDEN KARP · 1/1000 ✨</div>
 
 <main>
 <div class="wrap">
@@ -752,6 +786,7 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
       document.getElementById("serialInline").textContent="OMG "+serial;
     }
     if(s.id==="nexus"){ if(!previewing)label="⚡ One-of-one pull"; name="The Nexus · 1/1"; }
+    if(s.id==="karp"){ if(!previewing)label="✨ SHINY PULL ✨"; name="Golden Karp"; }
     document.getElementById("ptLabel").textContent=label;
     document.getElementById("ptName").textContent=name;
     var r=document.getElementById("ptRarity");
