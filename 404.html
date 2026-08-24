@@ -826,8 +826,23 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
     }catch(e){}
   }
   renderHours(); openNow();
-  fetch("config.json",{cache:"no-store"}).then(function(r){return r.ok?r.json():null}).then(function(cfg){
-    if(cfg){applyFacts(cfg); openNow();}
-  }).catch(function(){});
+  var isPreview=false;
+  try{
+    if(new URLSearchParams(location.search).get("preview")==="admin"){
+      var pc=localStorage.getItem("omgPreviewCfg");
+      if(pc){
+        isPreview=true; applyFacts(JSON.parse(pc)); openNow();
+        var rb=document.createElement("div");
+        rb.style.cssText="position:fixed;top:0;left:0;right:0;z-index:70;background:#B03A2E;color:#fff;font:800 13px 'Nunito Sans',sans-serif;text-align:center;padding:8px 12px;letter-spacing:.05em";
+        rb.textContent="PREVIEW — not published yet. Only you can see this. Go back to the admin tab to publish.";
+        document.body.appendChild(rb);
+      }
+    }
+  }catch(e){}
+  if(!isPreview){
+    fetch("config.json",{cache:"no-store"}).then(function(r){return r.ok?r.json():null}).then(function(cfg){
+      if(cfg){applyFacts(cfg); openNow();}
+    }).catch(function(){});
+  }
 })();
 </script>
