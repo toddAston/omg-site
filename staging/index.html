@@ -48,6 +48,19 @@
   --display:"Baloo 2","Zen Maru Gothic",cursive;
   --accent-font:"Zen Maru Gothic",sans-serif;
 }
+:root[data-skin="beach"]{
+  --ground:#FBEDD7; --ground-2:#F7E0BC; --card:#FFFDF8;
+  --ink:#3A2A1C; --ink-2:#6E573F; --ink-3:#9A8266;
+  --acc:#1FA5A0; --acc-deep:#157F7B; --acc-soft:#D8F1EF;
+  --pop:#C25A20; --pop-soft:#FBE3D2;
+  --alt:#C75C8E; --alt-soft:#F7DEEA;
+  --line:#EDD9B8; --line-2:#D9BE8C;
+  --btn-ink:#FFFDF5;
+  --shadow:0 4px 18px rgba(150,100,40,.18);
+  --radius:16px;
+  --display:"Fraunces","Georgia",serif;
+  --accent-font:"Fraunces",serif;
+}
 :root[data-skin="retro"]{
   --ground:#F4E8C1; --ground-2:#EAD9A6; --card:#FBF3D8;
   --ink:#2A2314; --ink-2:#5C4F2E; --ink-3:#8A7A50;
@@ -313,13 +326,15 @@ main{position:relative;z-index:1}
 :root[data-skin="midnight"] .li-dark,:root[data-skin="surge"] .li-dark,:root[data-skin="serial"] .li-dark,:root[data-skin="nexus"] .li-dark{display:block}
 .wm-text{display:none;font-family:var(--display);font-weight:800;font-size:21px;color:var(--ink);align-items:center;gap:10px}
 .sticker-text{display:none;flex-direction:column;align-items:center;gap:2px}
-:root.noimg .wm,:root.noimg .sticker-img,:root.noimg .sakura-poster{display:none!important}
+:root.noimg .wm,:root.noimg .sticker-img,:root.noimg .sakura-poster,:root.noimg .beach-poster{display:none!important}
 :root.noimg .wm-text{display:flex}
 :root.noimg .sticker-text{display:flex}
-:root.noimg[data-skin="sakura"] .hand .pcard{display:flex}
-:root.noimg[data-skin="sakura"] .hand .omg-sticker{display:flex}
-.sakura-poster{display:none}
+:root.noimg[data-skin="sakura"] .hand .pcard,:root.noimg[data-skin="beach"] .hand .pcard{display:flex}
+:root.noimg[data-skin="sakura"] .hand .omg-sticker,:root.noimg[data-skin="beach"] .hand .omg-sticker{display:flex}
+.sakura-poster,.beach-poster{display:none}
 :root[data-skin="sakura"] .hand .pcard,:root[data-skin="sakura"] .hand .omg-sticker{display:none}
+:root[data-skin="beach"] .hand .pcard,:root[data-skin="beach"] .hand .omg-sticker{display:none}
+:root[data-skin="beach"] .beach-poster{display:block;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(3deg);max-height:104%;width:auto;max-width:88%;border-radius:14px;border:3px solid #fff;box-shadow:0 10px 32px rgba(180,100,30,.35)}
 :root[data-skin="sakura"] .sakura-poster{display:block;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-3deg);max-height:104%;width:auto;max-width:88%;border-radius:14px;border:3px solid #fff;box-shadow:0 10px 32px rgba(200,90,130,.35)}
 
 /* ---------- top bar ---------- */
@@ -485,9 +500,10 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
 /* Roll the skin BEFORE first paint of the body content. Weights are basis points (of 10,000). */
 (function(){
   var SKINS=[
-    {id:"classic", name:"Classic",        rarity:"Common",      cls:"r-common",   w:4700, pct:"47%",    tc:"#2F6B4E"},
-    {id:"sakura",  name:"Sakura",         rarity:"Uncommon",    cls:"r-uncommon", w:2600, pct:"26%",    tc:"#E85D8A"},
-    {id:"retro",   name:"Retro '99",      rarity:"Uncommon",    cls:"r-uncommon", w:1300, pct:"13%",    tc:"#F5C518"},
+    {id:"classic", name:"Classic",        rarity:"Common",      cls:"r-common",   w:4100, pct:"41%",    tc:"#2F6B4E"},
+    {id:"sakura",  name:"Sakura",         rarity:"Uncommon",    cls:"r-uncommon", w:2300, pct:"23%",    tc:"#E85D8A"},
+    {id:"beach",   name:"Beach Day",      rarity:"Uncommon",    cls:"r-uncommon", w:1200, pct:"12%",    tc:"#1FA5A0"},
+    {id:"retro",   name:"Retro '99",      rarity:"Uncommon",    cls:"r-uncommon", w:1000, pct:"10%",    tc:"#F5C518"},
     {id:"midnight",name:"Midnight Etched",rarity:"Rare",        cls:"r-rare",     w:800,  pct:"8%",     tc:"#0B0C14"},
     {id:"surge",   name:"Surge Foil",     rarity:"Rare",        cls:"r-rare",     w:400,  pct:"4%",     tc:"#0E1230"},
     {id:"gold",    name:"Gold Holo",      rarity:"Secret Rare", cls:"r-secret",   w:150,  pct:"1.5%",   tc:"#C9A227"},
@@ -580,6 +596,7 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
     <div class="pcard c4"><span class="corner">Y</span><span class="game">Yu&#8209;Gi&#8209;Oh!</span><span class="corner b">Y</span></div>
     <div class="omg-sticker"><img class="sticker-img li-light" src="/assets/omg-black.png" alt=""><img class="sticker-img li-dark" src="/assets/omg-white.png" alt=""><span class="sticker-text"><span class="omg-big">OMG</span><span class="sub">Off Meta Gaming</span></span></div>
     <img class="sakura-poster" src="/assets/sakura-hero.jpg" alt="" onerror="document.documentElement.classList.add('noimg')">
+    <img class="beach-poster" src="/assets/beach-hero.jpg" alt="" onerror="document.documentElement.classList.add('noimg')">
   </div>
 </header>
 
