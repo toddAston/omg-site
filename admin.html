@@ -116,6 +116,16 @@ a{color:var(--acc-deep)}
       </div>
     </div>
 
+    <div class="panel hidden" id="stagePanel" style="border-color:var(--pop)">
+      <h2>🆕 Site update waiting</h2>
+      <p style="margin:0 0 12px" id="stageMsg">Todd staged a new version of the site. Look it over, then deploy it when you're happy.</p>
+      <div class="row" style="align-items:center">
+        <div style="flex:0"><button class="btn ghost" id="stageView">👀 View the new version</button></div>
+        <div style="flex:0"><button class="btn hidden" id="stageDeploy">🚀 Deploy the new version</button></div>
+      </div>
+      <div id="stageResult"></div>
+    </div>
+
     <div class="panel">
       <h2>🚀 Review &amp; publish</h2>
       <div class="note" id="changeList" style="margin:0 0 14px">No changes yet.</div>
@@ -314,11 +324,65 @@ a{color:var(--acc-deep)}
     });
   });
 
+  /* ---------- staged site version: view -> one-time deploy ---------- */
+  var stageSha=null, liveSha=null;
+  function smsg(kind,text){$("stageResult").innerHTML='<div class="msg '+kind+'">'+text+'</div>'}
+  function checkStaged(){
+    var B="https://api.github.com/repos/"+REPO+"/contents/";
+    Promise.all([
+      fetch(B+"?ref=main").then(function(r){return r.json()}),
+      fetch(B+"staging?ref=main").then(function(r){return r.ok?r.json():[]})
+    ]).then(function(res){
+      var root=res[0], st=res[1];
+      var live=(root.find?root.find(function(f){return f.name==="index.html"}):null);
+      var staged=(st.find?st.find(function(f){return f.name==="index.html"}):null);
+      if(!live||!staged)return;
+      liveSha=live.sha; stageSha=staged.sha;
+      if(liveSha!==stageSha)$("stagePanel").classList.remove("hidden");
+    }).catch(function(){});
+  }
+  $("stageView").addEventListener("click",function(){
+    window.open("/staging/","_blank","noopener");
+    $("stageDeploy").classList.remove("hidden");
+  });
+  $("stageDeploy").addEventListener("click",function(){
+    var token=getToken()||($("token")?$("token").value.trim():"");
+    if(!token){smsg("err","Paste the publish key first (in the Publish key box below).");return}
+    if(!stageSha){smsg("err","Nothing staged.");return}
+    var GB="https://api.github.com/repos/"+REPO;
+    var H={Authorization:"Bearer "+token,Accept:"application/vnd.github+json","Content-Type":"application/json"};
+    smsg("ok","Deploying…");
+    fetch(GB+"/git/ref/heads/main",{headers:H}).then(function(r){
+      if(r.status===401||r.status===403){authFail();smsg("err","That publish key didn't work — paste a fresh one below and try again.");throw"handled"}
+      return r.json();
+    }).then(function(ref){
+      var head=ref.object.sha;
+      return fetch(GB+"/git/commits/"+head,{headers:H}).then(function(r){return r.json()}).then(function(c){
+        return fetch(GB+"/git/trees",{method:"POST",headers:H,body:JSON.stringify({base_tree:c.tree.sha,tree:[
+          {path:"index.html",mode:"100644",type:"blob",sha:stageSha},
+          {path:"404.html",mode:"100644",type:"blob",sha:stageSha}
+        ]})}).then(function(r){return r.json()}).then(function(t){
+          return fetch(GB+"/git/commits",{method:"POST",headers:H,body:JSON.stringify({message:"Deploy staged site version (approved in shop admin)",tree:t.sha,parents:[head]})});
+        }).then(function(r){return r.json()}).then(function(nc){
+          return fetch(GB+"/git/refs/heads/main",{method:"PATCH",headers:H,body:JSON.stringify({sha:nc.sha})});
+        });
+      });
+    }).then(function(r){
+      if(!r||!r.ok)throw"GitHub error "+(r&&r.status);
+      $("stageDeploy").classList.add("hidden");
+      $("stagePanel").style.borderColor="var(--acc)";
+      $("stageMsg").textContent="Deployed ✓";
+      smsg("ok","✅ Deployed! The new version is live for everyone in about a minute.");
+    }).catch(function(e){
+      if(e!=="handled")smsg("err","Couldn't deploy — check the connection and try again. ("+e+")");
+    });
+  });
+
   /* ---------- boot ---------- */
   function showEditor(){
     $("lockPanel").classList.add("hidden");
     fetch("config.json",{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){
-      cfg=j;buildEditor();$("editor").classList.remove("hidden");refreshPubUI();
+      cfg=j;buildEditor();$("editor").classList.remove("hidden");refreshPubUI();checkStaged();
     }).catch(function(){
       msg("err","Couldn't load the current settings — refresh and try again.");
       $("editor").classList.remove("hidden");
