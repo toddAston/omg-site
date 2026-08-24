@@ -1,9 +1,9 @@
 <title>Off Meta Gaming</title>
-<meta name="description" content="Play what you love, not the meta. Magic: The Gathering, Pokémon, Yu-Gi-Oh! and Riftbound in Cape Girardeau, MO — singles, sealed, and game nights every week. Open Wed–Sun 1–9 PM at 2104 William St.">
+<meta name="description" content="Play what you love, not the meta. Magic: The Gathering, Pokémon, Yu-Gi-Oh! and Riftbound in Cape Girardeau, MO — singles, sealed, and game nights every week. Open Tue–Sun from 1 PM at 2104 William St.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Off Meta Gaming">
 <meta property="og:title" content="Off Meta Gaming — Play what you love, not the meta.">
-<meta property="og:description" content="Trading card shop in Cape Girardeau, MO. Magic, Pokémon, Yu-Gi-Oh! and Riftbound — singles, sealed, and game nights every week. Open Wed–Sun 1–9 PM.">
+<meta property="og:description" content="Trading card shop in Cape Girardeau, MO. Magic, Pokémon, Yu-Gi-Oh! and Riftbound — singles, sealed, and game nights every week. Open Tue–Sun from 1 PM.">
 <meta name="theme-color" content="#2F6B4E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -244,7 +244,7 @@ footer .fm{font-family:"Fraunces",serif;font-weight:800;color:var(--ink);font-si
       <a class="btn ghost" href="#visit">Come by the shop</a>
       <a class="btn ghost" href="#community">Find us everywhere</a>
     </div>
-    <p class="open-note" id="openNote"><span class="dot" aria-hidden="true"></span>Open 1–9 PM, Wednesday through Sunday</p>
+    <p class="open-note" id="openNote"><span class="dot" aria-hidden="true"></span>Open from 1 PM, Tuesday through Sunday</p>
   </div>
   <div class="hand" aria-hidden="true">
     <div class="pcard c1"><span class="corner">P</span><span class="game">Pokémon</span><span class="corner b">P</span></div>
@@ -405,12 +405,12 @@ footer .fm{font-family:"Fraunces",serif;font-weight:800;color:var(--ink);font-si
           <caption>Hours</caption>
           <tbody>
             <tr data-day="1" class="closed"><td>Monday</td><td>Closed</td></tr>
-            <tr data-day="2" class="closed"><td>Tuesday</td><td>Closed</td></tr>
+            <tr data-day="2"><td>Tuesday</td><td>1–6 PM</td></tr>
             <tr data-day="3"><td>Wednesday</td><td>1–9 PM</td></tr>
             <tr data-day="4"><td>Thursday</td><td>1–9 PM</td></tr>
             <tr data-day="5"><td>Friday</td><td>1–9 PM</td></tr>
             <tr data-day="6"><td>Saturday</td><td>1–9 PM</td></tr>
-            <tr data-day="0"><td>Sunday</td><td>1–9 PM</td></tr>
+            <tr data-day="0"><td>Sunday</td><td>1–6 PM</td></tr>
           </tbody>
         </table>
       </div>
@@ -460,10 +460,10 @@ footer .fm{font-family:"Fraunces",serif;font-weight:800;color:var(--ink);font-si
     var hr=parseInt(parts.find(function(p){return p.type==="hour"}).value,10);
     var row=document.querySelector('#hoursTable tr[data-day="'+wd+'"]');
     if(row)row.classList.add("today");
-    var openDay=[0,3,4,5,6].indexOf(wd)>=0;
+    var closeHr={0:18,2:18,3:21,4:21,5:21,6:21}[wd];
     var note=document.getElementById("openNote");
-    if(openDay&&hr>=13&&hr<21){note.classList.add("open");note.innerHTML='<span class="dot" aria-hidden="true"></span>Open now — until 9 PM tonight';}
-    else if(openDay&&hr<13){note.innerHTML='<span class="dot" aria-hidden="true"></span>Opening at 1 PM today';}
+    if(closeHr&&hr>=13&&hr<closeHr){note.classList.add("open");note.innerHTML='<span class="dot" aria-hidden="true"></span>Open now — until '+(closeHr===18?'6':'9')+' PM tonight';}
+    else if(closeHr&&hr<13){note.innerHTML='<span class="dot" aria-hidden="true"></span>Opening at 1 PM today';}
   }catch(e){/* static hours remain correct without JS */}
 })();
 </script>
