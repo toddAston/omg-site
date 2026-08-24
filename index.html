@@ -1,46 +1,972 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Off Meta Gaming</title>
-<meta name="description" content="Off Meta Gaming — trading card shop in Cape Girardeau, MO. Something new is brewing.">
-<meta name="theme-color" content="#2F6B4E">
-<meta property="og:title" content="Off Meta Gaming">
-<meta property="og:description" content="Trading card shop in Cape Girardeau, MO. Something new is brewing.">
+<meta name="description" content="Off Meta Gaming, Cape Girardeau MO — every visit pulls a random site skin, from Common all the way to a 1-in-2,000 one-of-one. Magic, Pokémon, One Piece, Riftbound. Open Tue–Sun from 1 PM.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="https://offmetagaming.net/">
+<meta property="og:url" content="https://offmetagaming.net/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Off Meta Gaming">
+<meta property="og:title" content="Off Meta Gaming — Play what you love, not the meta.">
+<meta property="og:description" content="Trading card shop in Cape Girardeau, MO — Magic, Pokémon, One Piece, Riftbound. Open Tue–Sun from 1 PM.">
 <meta property="og:image" content="https://offmetagaming.net/assets/og-beach.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
+<meta name="theme-color" content="#2F6B4E" id="metaThemeColor">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600..900&family=Nunito+Sans:wght@400;700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..900,50;1,9..144,400..900,50&family=Baloo+2:wght@600;700;800&family=Zen+Maru+Gothic:wght@700;900&family=Pixelify+Sans:wght@400..700&family=IBM+Plex+Mono:wght@500;700&family=Nunito+Sans:ital,wght@0,400;0,700;0,800;0,900;1,400&display=swap">
+
 <style>
-:root{--ground:#FAF6ED;--card:#FFFDF7;--ink:#28211A;--ink-2:#5A4F41;--acc:#2F6B4E;--acc-deep:#24553D;--pop:#C98F2D;--pink:#D8447C;--line:#C9BCA4}
+/* ============================================================
+   SKIN TOKEN SETS — each skin is a COMPLETE committed world.
+   :root carries CLASSIC so the pre-JS paint is always coherent.
+   ============================================================ */
+:root{
+  --ground:#FAF6ED; --ground-2:#F1EADC; --card:#FFFDF7;
+  --ink:#28211A; --ink-2:#5A4F41; --ink-3:#8A7D6B;
+  --acc:#2F6B4E; --acc-deep:#24553D; --acc-soft:#E3EDE5;
+  --pop:#C98F2D; --pop-soft:#F6E9CE;
+  --alt:#D8447C; --alt-soft:#F9E3ED;
+  --line:#DDD3C0; --line-2:#C9BCA4;
+  --btn-ink:#FDFBF5;
+  --shadow:0 3px 16px rgba(60,45,20,.12);
+  --radius:14px;
+  --display:"Fraunces","Georgia",serif;
+  --accent-font:"Fraunces",serif;
+}
+:root[data-skin="sakura"]{
+  --ground:#FFF1F5; --ground-2:#FFE4EC; --card:#FFFFFF;
+  --ink:#4A2B3A; --ink-2:#7C5A6B; --ink-3:#A98A99;
+  --acc:#E85D8A; --acc-deep:#C94371; --acc-soft:#FBD7E3;
+  --pop:#2E7D5B; --pop-soft:#DFF3EA;
+  --alt:#9B8CC9; --alt-soft:#EBE6F7;
+  --line:#F3CBD8; --line-2:#EBACC3;
+  --btn-ink:#FFFFFF;
+  --shadow:0 4px 18px rgba(200,90,130,.16);
+  --radius:22px;
+  --display:"Baloo 2","Zen Maru Gothic",cursive;
+  --accent-font:"Zen Maru Gothic",sans-serif;
+}
+:root[data-skin="beach"]{
+  --ground:#FBEDD7; --ground-2:#F7E0BC; --card:#FFFDF8;
+  --ink:#3A2A1C; --ink-2:#6E573F; --ink-3:#9A8266;
+  --acc:#1FA5A0; --acc-deep:#157F7B; --acc-soft:#D8F1EF;
+  --pop:#C25A20; --pop-soft:#FBE3D2;
+  --alt:#C75C8E; --alt-soft:#F7DEEA;
+  --line:#EDD9B8; --line-2:#D9BE8C;
+  --btn-ink:#FFFDF5;
+  --shadow:0 4px 18px rgba(150,100,40,.18);
+  --radius:16px;
+  --display:"Fraunces","Georgia",serif;
+  --accent-font:"Fraunces",serif;
+}
+:root[data-skin="karp"]{
+  --ground:#F9E9B8; --ground-2:#F3DC92; --card:#FFF9E3;
+  --ink:#4A3608; --ink-2:#7A5F1D; --ink-3:#A08745;
+  --acc:#B8860B; --acc-deep:#8F6A08; --acc-soft:#F3E3AC;
+  --pop:#C23A14; --pop-soft:#F9DCD0;
+  --alt:#8A6A15; --alt-soft:#F0E4BC;
+  --line:#E8D189; --line-2:#CDB05E;
+  --btn-ink:#FFFDF0;
+  --shadow:0 4px 22px rgba(160,120,20,.3);
+  --radius:18px;
+  --display:"Fraunces","Georgia",serif;
+  --accent-font:"Fraunces",serif;
+}
+:root[data-skin="manga"]{
+  --ground:#FFFFFF; --ground-2:#F1F1F1; --card:#FFFFFF;
+  --ink:#111111; --ink-2:#333333; --ink-3:#757575;
+  --acc:#111111; --acc-deep:#000000; --acc-soft:#ECECEC;
+  --pop:#E60012; --pop-soft:#FBDCDC;
+  --alt:#555555; --alt-soft:#E6E6E6;
+  --line:#111111; --line-2:#111111;
+  --btn-ink:#FFFFFF;
+  --shadow:6px 6px 0 #111111;
+  --radius:4px;
+  --display:"Zen Maru Gothic","Baloo 2",sans-serif;
+  --accent-font:"Zen Maru Gothic",sans-serif;
+}
+:root[data-skin="retro"]{
+  --ground:#F4E8C1; --ground-2:#EAD9A6; --card:#FBF3D8;
+  --ink:#2A2314; --ink-2:#5C4F2E; --ink-3:#8A7A50;
+  --acc:#1B53BA; --acc-deep:#123C8C; --acc-soft:#D6E0F5;
+  --pop:#E3350D; --pop-soft:#F8D9CF;
+  --alt:#8A6A00; --alt-soft:#F2E5B8;
+  --line:#D9C88F; --line-2:#C0AB66;
+  --btn-ink:#FFFDF2;
+  --shadow:3px 3px 0 rgba(42,35,20,.28);
+  --radius:6px;
+  --display:"Pixelify Sans","Courier New",monospace;
+  --accent-font:"Pixelify Sans",monospace;
+}
+:root[data-skin="midnight"]{
+  --ground:#0B0C14; --ground-2:#111320; --card:#151726;
+  --ink:#E6E9F7; --ink-2:#A3A9C7; --ink-3:#7B81A3;
+  --acc:#8FD8D2; --acc-deep:#B5EAE5; --acc-soft:#122B30;
+  --pop:#C9CFE8; --pop-soft:#232741;
+  --alt:#8E96B8; --alt-soft:#1D2036;
+  --line:#262A44; --line-2:#3F4569;
+  --btn-ink:#0A0B12;
+  --shadow:0 4px 20px rgba(0,0,0,.6);
+  --radius:12px;
+  --display:"Fraunces","Georgia",serif;
+  --accent-font:"Fraunces",serif;
+}
+:root[data-skin="surge"]{
+  --ground:#0E1230; --ground-2:#131840; --card:rgba(17,22,56,.72);
+  --ink:#F1F3FF; --ink-2:#C3C9F2; --ink-3:#8F97CD;
+  --acc:#57E6C4; --acc-deep:#8FF3DC; --acc-soft:#0E3A38;
+  --pop:#FF7ED2; --pop-soft:#43163A;
+  --alt:#9FA8FF; --alt-soft:#232B66;
+  --line:#2E3670; --line-2:#525CA8;
+  --btn-ink:#08102A;
+  --shadow:0 6px 24px rgba(0,0,0,.5);
+  --radius:16px;
+  --display:"Fraunces","Georgia",serif;
+  --accent-font:"Fraunces",serif;
+}
+:root[data-skin="gold"]{
+  --ground:#F8EFD4; --ground-2:#F0E2B6; --card:#FFFAE8;
+  --ink:#3A2D0F; --ink-2:#6C5824; --ink-3:#97824B;
+  --acc:#A8811C; --acc-deep:#876710; --acc-soft:#F0E1AF;
+  --pop:#C23B2A; --pop-soft:#F5D8D0;
+  --alt:#7A6420; --alt-soft:#EFE5C4;
+  --line:#E0CF97; --line-2:#C6B06A;
+  --btn-ink:#FFFDF2;
+  --shadow:0 4px 20px rgba(140,110,30,.24);
+  --radius:14px;
+  --display:"Fraunces","Georgia",serif;
+  --accent-font:"Fraunces",serif;
+}
+:root[data-skin="serial"]{
+  --ground:#0F0F0F; --ground-2:#151513; --card:#1B1A17;
+  --ink:#F2EAD8; --ink-2:#C9BD9F; --ink-3:#8F8568;
+  --acc:#D4AF37; --acc-deep:#E8C963; --acc-soft:#2E2712;
+  --pop:#D4AF37; --pop-soft:#2E2712;
+  --alt:#A8A090; --alt-soft:#242220;
+  --line:#2C2A24; --line-2:#6E5B22;
+  --btn-ink:#141310;
+  --shadow:0 4px 22px rgba(0,0,0,.65);
+  --radius:10px;
+  --display:"Fraunces","Georgia",serif;
+  --accent-font:"IBM Plex Mono",monospace;
+}
+:root[data-skin="nexus"]{
+  --ground:#05040F; --ground-2:#0A0920; --card:#100F26;
+  --ink:#F4F2FF; --ink-2:#C4BEE8; --ink-3:#8B83BC;
+  --acc:#7FF7E3; --acc-deep:#AFFBEF; --acc-soft:#0E3A38;
+  --pop:#FF8FD8; --pop-soft:#3F1638;
+  --alt:#B7A6FF; --alt-soft:#272052;
+  --line:#252048; --line-2:#4A4287;
+  --btn-ink:#07060F;
+  --shadow:0 6px 26px rgba(0,0,0,.6);
+  --radius:14px;
+  --display:"Fraunces","Georgia",serif;
+  --accent-font:"Fraunces",serif;
+}
+
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--ground);color:var(--ink);font-family:"Nunito Sans",-apple-system,sans-serif;text-align:center;padding:24px}
-.card{max-width:440px}
-.sticker{width:150px;height:150px;border-radius:50%;background:var(--card);border:3px solid var(--ink);box-shadow:5px 6px 0 rgba(60,45,20,.22);transform:rotate(-6deg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;margin:0 auto 28px}
-.sticker .omg{font-weight:900;font-size:52px;letter-spacing:-.03em;line-height:1;color:var(--pink);text-shadow:3px 3px 0 var(--acc)}
-.sticker .sub{font-weight:900;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2)}
-h1{font-family:"Fraunces",serif;font-size:clamp(28px,6vw,38px);margin:0 0 10px;letter-spacing:-.01em}
-p{color:var(--ink-2);font-size:17px;line-height:1.6;margin:0 0 24px}
-.links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-a.btn{display:inline-block;font-weight:800;text-decoration:none;padding:12px 22px;border-radius:10px;background:var(--acc);color:#FDFBF5}
-a.btn:hover{background:var(--acc-deep)}
-a.btn.ghost{background:none;border:2px solid var(--line);color:var(--ink)}
-.foot{margin-top:34px;font-size:13.5px;color:var(--ink-2)}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}.sheen{display:none!important}}
+@media (max-width:700px){
+  .wrap{padding:0 min(8vw,36px)}
+}
+@media (max-width:560px){
+  .retro-badge,.serial-fixed,.one-stamp{bottom:190px}
+  .hero{padding-top:26px;gap:30px}
+  .hero h1{font-size:clamp(36px,10.5vw,48px)}
+  .lede{margin:16px 0 24px}
+  .pull-toast{left:12px;right:12px;max-width:none}
+}
+/* retro's fixed frame overlays the viewport edge — inset the whole page inside it */
+:root[data-skin="retro"] main{padding:18px 14px 28px}
+:root[data-skin="retro"] .pull-toast{left:24px;bottom:24px}
+@media (max-width:560px){
+  :root[data-skin="retro"] .pull-toast{left:20px;right:20px;bottom:20px}
+}
+.js-only{display:none}
+:root.js .js-only{display:block}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:"Nunito Sans",-apple-system,"Segoe UI",sans-serif;
+  font-size:17px;line-height:1.66;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  transition:background .4s ease;
+}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);line-height:1.13;text-wrap:balance;margin:0}
+a{color:var(--acc-deep);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--pop);outline-offset:3px;border-radius:6px}
+
+/* ============ FOIL / TREATMENT LAYERS ============ */
+/* generic decorative layers, enabled per skin */
+.petals,.retro-dots,.retro-frame,.retro-badge,.sheen,.fullart,.stars,.nebula,.serial-fixed,.one-stamp,.spark,.karps,.karp-stamp,.manga-tone,.manga-burst{display:none}
+main{position:relative;z-index:1}
+
+/* --- sakura: falling petals --- */
+:root[data-skin="sakura"] .petals{display:block;position:fixed;inset:0;pointer-events:none;z-index:0}
+.petal{position:absolute;top:-30px;width:13px;height:11px;background:var(--acc-soft);border-radius:70% 30% 60% 40%;opacity:.85;animation:fall linear infinite}
+@keyframes fall{0%{transform:translate(0,-30px) rotate(0)}100%{transform:translate(64px,105vh) rotate(340deg)}}
+
+/* --- retro '99: halftone dots + 1st edition frame --- */
+:root[data-skin="retro"] .retro-dots{display:block;position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(rgba(42,35,20,.08) 1px,transparent 1.5px);background-size:9px 9px}
+:root[data-skin="retro"] .retro-frame{display:block;position:fixed;inset:0;pointer-events:none;z-index:45;
+  border:10px solid #F5C518;box-shadow:inset 0 0 0 3px #1B53BA,inset 0 0 0 5px rgba(42,35,20,.15)}
+:root[data-skin="retro"] .retro-badge{display:block;position:fixed;right:18px;bottom:18px;z-index:46;pointer-events:none;
+  font-family:"Pixelify Sans",monospace;font-weight:700;font-size:14px;letter-spacing:.08em;color:#2A2314;
+  background:#F5C518;border:3px solid #2A2314;border-radius:4px;padding:6px 12px;transform:rotate(-6deg);
+  box-shadow:3px 3px 0 rgba(42,35,20,.35)}
+
+/* --- midnight etched: crosshatch etch on surfaces, steel-foil type --- */
+:root[data-skin="midnight"] .card,
+:root[data-skin="midnight"] .event,
+:root[data-skin="midnight"] .hours,
+:root[data-skin="midnight"] .social,
+:root[data-skin="midnight"] .pcard{
+  background-image:
+    repeating-linear-gradient(45deg,rgba(200,210,240,.045) 0 1px,transparent 1px 8px),
+    repeating-linear-gradient(-45deg,rgba(200,210,240,.04) 0 1px,transparent 1px 8px);
+}
+:root[data-skin="midnight"] .hand .pcard{display:none}
+:root[data-skin="midnight"] .omg-sticker{right:auto;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-4deg);width:230px;height:230px;
+  border-color:#8E96B8;box-shadow:0 0 0 6px #1B1E33,0 0 0 7.5px #3F4569,0 14px 40px rgba(0,0,0,.65);
+  background-image:repeating-linear-gradient(45deg,rgba(200,210,240,.05) 0 1px,transparent 1px 7px),repeating-linear-gradient(-45deg,rgba(200,210,240,.045) 0 1px,transparent 1px 7px)}
+:root[data-skin="midnight"] .sticker-img{width:70%}
+:root[data-skin="midnight"] h2{
+  background:linear-gradient(100deg,#8E96B8 15%,#EAEEFF 45%,#8E96B8 75%);
+  background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:sheen 7s linear infinite;
+}
+
+/* --- surge foil: full-art aurora + rippled foil sheen, glass panels --- */
+:root[data-skin="surge"] .fullart{display:block;position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(60% 48% at 18% 12%,rgba(87,230,196,.32),transparent 65%),
+    radial-gradient(55% 45% at 85% 20%,rgba(255,126,210,.28),transparent 65%),
+    radial-gradient(70% 55% at 55% 90%,rgba(159,168,255,.30),transparent 68%),
+    radial-gradient(40% 35% at 8% 78%,rgba(87,150,255,.22),transparent 70%),
+    var(--ground);
+}
+:root[data-skin="surge"] .sheen{display:block;position:fixed;inset:-40%;z-index:40;pointer-events:none;opacity:.5;
+  mix-blend-mode:screen;
+  background:
+    repeating-radial-gradient(circle at 28% 22%,rgba(255,255,255,.055) 0 2px,transparent 2px 15px),
+    repeating-radial-gradient(circle at 74% 68%,rgba(255,255,255,.05) 0 2px,transparent 2px 19px);
+  animation:ripple 16s linear infinite;
+}
+@keyframes ripple{0%{transform:translate(0,0)}50%{transform:translate(3%,2%)}100%{transform:translate(0,0)}}
+:root[data-skin="surge"] .card,
+:root[data-skin="surge"] .event,
+:root[data-skin="surge"] .hours,
+:root[data-skin="surge"] .omg-sticker,
+:root[data-skin="surge"] .pull-toast{backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)}
+:root[data-skin="surge"] h2{
+  background:linear-gradient(100deg,#57E6C4,#9FA8FF 50%,#FF7ED2);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* --- gold holo: metallic gold + animated rainbow sweep --- */
+:root[data-skin="gold"] .sheen{display:block;position:fixed;inset:0;z-index:40;pointer-events:none;mix-blend-mode:overlay;
+  background:linear-gradient(115deg,transparent 18%,rgba(255,0,90,.34) 32%,rgba(255,214,0,.34) 42%,rgba(0,255,170,.32) 52%,rgba(0,140,255,.32) 62%,rgba(180,0,255,.30) 72%,transparent 86%);
+  background-size:300% 300%;animation:pan 9s ease-in-out infinite;
+}
+@keyframes pan{0%{background-position:0% 0%}50%{background-position:100% 100%}100%{background-position:0% 0%}}
+:root[data-skin="gold"] .card,
+:root[data-skin="gold"] .event,
+:root[data-skin="gold"] .hours{
+  border-color:#C9A227;
+  background-image:linear-gradient(135deg,rgba(255,0,90,.05),rgba(255,214,0,.06) 30%,rgba(0,255,170,.05) 60%,rgba(0,140,255,.05));
+}
+:root[data-skin="gold"] h2{
+  background:linear-gradient(100deg,#5C4708 10%,#876710 35%,#9C7717 50%,#876710 65%,#5C4708 90%);
+  background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:sheen 6s linear infinite;text-shadow:none;
+}
+:root[data-skin="gold"] .omg-sticker{background:linear-gradient(145deg,#B08D2A,#E8C963 40%,#FFF3C2 52%,#E8C963 64%,#B08D2A);border-color:#6E5511}
+:root[data-skin="gold"] .omg-sticker .omg-big{color:#3A2D0F}
+:root[data-skin="gold"] .event.live{border-color:#876710}
+:root[data-skin="serial"] .event.live{border-color:var(--acc)}
+
+/* --- serialized: carbon + gold double frame + stamped number --- */
+:root[data-skin="serial"] body{background-image:repeating-linear-gradient(115deg,rgba(212,175,55,.028) 0 1px,transparent 1px 12px)}
+:root[data-skin="serial"] .card,
+:root[data-skin="serial"] .event,
+:root[data-skin="serial"] .hours{
+  border:1px solid #6E5B22;outline:1px solid rgba(212,175,55,.35);outline-offset:4px;
+}
+:root[data-skin="serial"] h2{color:var(--acc-deep)}
+:root[data-skin="serial"] .serial-fixed{display:block;position:fixed;right:18px;bottom:18px;z-index:46;pointer-events:none;
+  font-family:"IBM Plex Mono",monospace;font-weight:700;font-size:13px;letter-spacing:.22em;color:#E8C963;
+  border:1px solid #6E5B22;background:rgba(15,15,13,.85);padding:8px 14px;border-radius:4px;
+  text-shadow:0 1px 0 rgba(0,0,0,.8)}
+.serial-inline{display:none;font-family:"IBM Plex Mono",monospace;font-weight:700;letter-spacing:.22em;font-size:13.5px;color:var(--acc-deep);margin-top:14px}
+:root[data-skin="serial"] .serial-inline{display:block}
+
+/* --- the nexus 1/1: starfield + nebula + iridescent borders --- */
+:root[data-skin="nexus"] .stars{display:block;position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    radial-gradient(1px 1px at 22px 34px,#FFF,transparent),
+    radial-gradient(1px 1px at 122px 156px,rgba(255,255,255,.75),transparent),
+    radial-gradient(1.6px 1.6px at 200px 62px,rgba(196,222,255,.9),transparent),
+    radial-gradient(1px 1px at 68px 220px,rgba(255,255,255,.55),transparent),
+    radial-gradient(1.3px 1.3px at 256px 244px,rgba(255,214,255,.8),transparent);
+  background-size:290px 270px}
+:root[data-skin="nexus"] .stars.s2{background-size:410px 390px;animation:tw 4.5s ease-in-out infinite}
+:root[data-skin="nexus"] .nebula{display:block;position:fixed;inset:-12%;z-index:0;pointer-events:none;opacity:.8;
+  background:
+    radial-gradient(42% 36% at 22% 24%,rgba(127,247,227,.16),transparent 70%),
+    radial-gradient(46% 40% at 80% 30%,rgba(255,143,216,.15),transparent 70%),
+    radial-gradient(55% 48% at 55% 88%,rgba(183,166,255,.18),transparent 72%);
+  animation:drift 40s ease-in-out infinite alternate}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(2.5%,1.5%) scale(1.06)}}
+:root[data-skin="nexus"] .card,
+:root[data-skin="nexus"] .event,
+:root[data-skin="nexus"] .hours,
+:root[data-skin="nexus"] .pull-toast{
+  border:1.5px solid transparent;
+  background:
+    linear-gradient(var(--card),var(--card)) padding-box,
+    linear-gradient(120deg,#7FF7E3,#B7A6FF 40%,#FF8FD8 70%,#7FF7E3) border-box;
+}
+:root[data-skin="nexus"] h2{
+  background:linear-gradient(100deg,#7FF7E3,#B7A6FF 40%,#FF8FD8 70%,#7FF7E3);
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:sheen 5s linear infinite;
+}
+:root[data-skin="nexus"] .one-stamp{display:block;position:fixed;right:18px;bottom:18px;z-index:46;pointer-events:none;
+  font-family:"IBM Plex Mono",monospace;font-weight:700;font-size:13px;letter-spacing:.24em;color:#05040F;
+  background:linear-gradient(120deg,#7FF7E3,#B7A6FF,#FF8FD8);padding:8px 14px;border-radius:4px}
+:root[data-skin="nexus"] .spark,
+:root[data-skin="gold"] .spark{display:block;position:fixed;pointer-events:none;font-size:18px;color:var(--acc);animation:tw 3s ease-in-out infinite;z-index:0}
+@keyframes tw{0%,100%{opacity:.2;transform:scale(.85)}50%{opacity:.95;transform:scale(1.15)}}
+
+/* --- manga: screentone, panel borders, speed lines, one red accent --- */
+:root[data-skin="manga"] .manga-tone{display:block;position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(17,17,17,.16) 1px,transparent 1.4px);background-size:7px 7px;
+  -webkit-mask-image:radial-gradient(120% 90% at 50% 45%,transparent 45%,#000 90%);mask-image:radial-gradient(120% 90% at 50% 45%,transparent 45%,#000 90%)}
+:root[data-skin="manga"] .manga-burst{display:block;position:fixed;inset:-20%;pointer-events:none;z-index:0;opacity:.35;
+  background:repeating-conic-gradient(from 0deg at 50% 32%,rgba(17,17,17,.14) 0deg .8deg,transparent .8deg 6deg)}
+:root[data-skin="manga"] .card,
+:root[data-skin="manga"] .event,
+:root[data-skin="manga"] .hours,
+:root[data-skin="manga"] .social,
+:root[data-skin="manga"] .pcard,
+:root[data-skin="manga"] .pull-toast{border-width:3px}
+:root[data-skin="manga"] .event.live{border-color:var(--pop)}
+:root[data-skin="manga"] .holo{color:var(--pop)}
+:root[data-skin="manga"] .btn.primary{background:#111;box-shadow:4px 4px 0 rgba(17,17,17,.25)}
+:root[data-skin="manga"] .omg-sticker{box-shadow:6px 6px 0 #111}
+
+/* --- golden karp: EXCESSIVE. gold everything + flying karps --- */
+:root[data-skin="karp"] body{background-image:radial-gradient(80% 55% at 50% -10%,rgba(255,215,80,.55),transparent 70%),radial-gradient(1.5px 1.5px at 40px 60px,rgba(210,170,40,.35),transparent),radial-gradient(1.5px 1.5px at 160px 140px,rgba(210,170,40,.3),transparent);background-size:auto,220px 200px,220px 200px}
+:root[data-skin="karp"] .sheen{display:block;position:fixed;inset:0;z-index:40;pointer-events:none;mix-blend-mode:overlay;opacity:.85;
+  background:linear-gradient(115deg,transparent 15%,rgba(255,60,60,.4) 30%,rgba(255,215,0,.5) 45%,rgba(255,255,200,.45) 52%,rgba(255,215,0,.5) 60%,rgba(255,120,0,.4) 72%,transparent 88%);
+  background-size:300% 300%;animation:pan 5s ease-in-out infinite}
+:root[data-skin="karp"] .spark{display:block;position:fixed;pointer-events:none;font-size:26px;color:#D4AF37;animation:tw 1.8s ease-in-out infinite;z-index:41;text-shadow:0 0 12px rgba(255,215,0,.8)}
+:root[data-skin="karp"] .card,
+:root[data-skin="karp"] .event,
+:root[data-skin="karp"] .hours{border-color:#C9A227;background-image:linear-gradient(135deg,rgba(255,80,40,.07),rgba(255,215,0,.12) 30%,rgba(255,255,200,.1) 50%,rgba(255,215,0,.12) 70%,rgba(200,120,0,.08))}
+:root[data-skin="karp"] h2{background:linear-gradient(100deg,#8F6A08 5%,#D4AF37 25%,#FFF3C2 40%,#D2461E 52%,#FFF3C2 64%,#D4AF37 78%,#8F6A08 95%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 3.5s linear infinite}
+:root[data-skin="karp"] .omg-sticker{background:linear-gradient(145deg,#B08D2A,#F5C33B 35%,#FFF3C2 50%,#F5C33B 65%,#B08D2A);border-color:#6E5511;animation:tw 3s ease-in-out infinite}
+:root[data-skin="karp"] .karps{display:block;position:fixed;inset:0;pointer-events:none;z-index:42;overflow:hidden}
+.karp{position:absolute;left:0;top:0;will-change:transform;animation:karpfly linear infinite}
+@keyframes karpfly{0%{transform:translate(-18vw,108vh) rotate(-30deg)}50%{transform:translate(48vw,42vh) rotate(180deg)}100%{transform:translate(118vw,-18vh) rotate(390deg)}}
+:root[data-skin="karp"] .karp-stamp{display:block;position:fixed;right:18px;bottom:18px;z-index:46;pointer-events:none;font-family:"IBM Plex Mono",monospace;font-weight:700;font-size:13px;letter-spacing:.18em;color:#4A3608;background:linear-gradient(120deg,#F5C33B,#FFF0B0,#F5C33B);border:2px solid #C23A14;padding:8px 14px;border-radius:6px;box-shadow:0 0 18px rgba(255,215,0,.6)}
+
+/* holo headline span — per-skin foil treatments */
+:root[data-skin="midnight"] .holo{background:linear-gradient(100deg,#8E96B8 15%,#EAEEFF 45%,#8E96B8 75%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 7s linear infinite}
+:root[data-skin="surge"] .holo{background:linear-gradient(100deg,#57E6C4,#9FA8FF 45%,#FF7ED2 80%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 6s linear infinite}
+:root[data-skin="gold"] .holo{background:linear-gradient(100deg,#5C4708 5%,#876710 30%,#9C7717 50%,#876710 70%,#5C4708 95%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 6s linear infinite}
+:root[data-skin="serial"] .holo{background:linear-gradient(100deg,#8A6F1C 10%,#E8C963 45%,#FFF3C2 52%,#E8C963 60%,#8A6F1C 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+:root[data-skin="karp"] .holo{background:linear-gradient(100deg,#8F6A08,#D4AF37 25%,#FFF3C2 42%,#D2461E 52%,#FFF3C2 62%,#D4AF37 78%,#8F6A08 95%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 3s linear infinite}
+:root[data-skin="nexus"] .holo{background:linear-gradient(100deg,#7FF7E3,#B7A6FF 35%,#FF8FD8 65%,#7FF7E3 95%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 4.5s linear infinite}
+@keyframes sheen{0%{background-position:0 0}100%{background-position:220% 0}}
+
+/* ---------- brand marks ---------- */
+.wm{height:44px;width:auto;display:none}
+.sticker-img{width:74%;height:auto;display:none}
+.li-light{display:none}.li-dark{display:none}
+:root:not([data-skin="midnight"]):not([data-skin="surge"]):not([data-skin="serial"]):not([data-skin="nexus"]) .li-light{display:block}
+:root[data-skin="midnight"] .li-dark,:root[data-skin="surge"] .li-dark,:root[data-skin="serial"] .li-dark,:root[data-skin="nexus"] .li-dark{display:block}
+.wm-text{display:none;font-family:var(--display);font-weight:800;font-size:21px;color:var(--ink);align-items:center;gap:10px}
+.sticker-text{display:none;flex-direction:column;align-items:center;gap:2px}
+:root.noimg .wm,:root.noimg .sticker-img,:root.noimg .sakura-poster,:root.noimg .beach-poster,:root.noimg .beach-sleeve{display:none!important}
+:root.noimg .wm-text{display:flex}
+:root.noimg .sticker-text{display:flex}
+:root.noimg[data-skin="sakura"] .hand .pcard,:root.noimg[data-skin="beach"] .hand .pcard{display:flex}
+:root.noimg[data-skin="sakura"] .hand .omg-sticker,:root.noimg[data-skin="beach"] .hand .omg-sticker{display:flex}
+.sakura-poster,.beach-poster{display:none}
+:root[data-skin="sakura"] .hand .pcard,:root[data-skin="sakura"] .hand .omg-sticker{display:none}
+:root[data-skin="beach"] .hand .pcard,:root[data-skin="beach"] .hand .omg-sticker{display:none}
+.beach-sleeve{display:none}
+:root[data-skin="beach"] .beach-sleeve{display:block;position:absolute;left:50%;top:50%;padding:10px;background:linear-gradient(160deg,#FFFFFF,#F2FBFA);border-radius:22px;
+  box-shadow:0 0 0 3px #1FA5A0,0 18px 44px rgba(180,100,30,.4);
+  animation:sleevebob 5.5s ease-in-out infinite}
+@keyframes sleevebob{0%,100%{transform:translate(-50%,-50%) rotate(3deg)}50%{transform:translate(-50%,-53%) rotate(1.2deg)}}
+:root[data-skin="beach"] .beach-poster{display:block;height:min(330px,60vw);width:auto;border-radius:14px}
+:root[data-skin="beach"] .sleeve-gloss{position:absolute;inset:10px;border-radius:14px;pointer-events:none;
+  background:linear-gradient(115deg,transparent 28%,rgba(255,255,255,.5) 43%,rgba(255,255,255,.14) 50%,transparent 66%);
+  background-size:250% 100%;animation:glosslide 4.5s ease-in-out infinite}
+@keyframes glosslide{0%,100%{background-position:0% 0}50%{background-position:100% 0}}
+:root[data-skin="sakura"] .sakura-poster{display:block;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-3deg);max-height:104%;width:auto;max-width:88%;border-radius:14px;border:3px solid #fff;box-shadow:0 10px 32px rgba(200,90,130,.35)}
+
+/* ---------- top bar ---------- */
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:20px 0;gap:14px;flex-wrap:wrap}
+.wordmark{font-family:var(--display);font-weight:800;font-size:21px;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:10px}
+.wordmark .omg{font-family:"Nunito Sans",sans-serif;font-weight:900;font-size:13px;color:var(--btn-ink);background:var(--acc);border-radius:8px;padding:3px 8px;transform:rotate(-6deg);display:inline-block;box-shadow:2px 2px 0 var(--pop)}
+.topnav{display:flex;gap:20px;font-weight:800;font-size:15px;flex-wrap:wrap}
+.topnav a{text-decoration:none;color:var(--ink-2)}
+.topnav a:hover{color:var(--acc)}
+
+/* ---------- hero ---------- */
+.hero{padding-top:40px;padding-bottom:72px;display:grid;grid-template-columns:1.12fr .88fr;gap:38px;align-items:center}
+@media(max-width:820px){.hero{grid-template-columns:1fr}}
+.kicker{font-family:var(--accent-font);font-weight:900;font-size:13.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--pop);margin-bottom:13px}
+.hero h1{font-size:clamp(40px,6.8vw,70px);font-weight:900;letter-spacing:-.02em}
+.hero h1 .hl{color:var(--acc)}
+.lede{font-size:clamp(17px,2.1vw,20px);color:var(--ink-2);max-width:47ch;margin:18px 0 26px}
+.cta-row{display:flex;gap:13px;flex-wrap:wrap}
+.btn{display:inline-block;font-weight:800;font-size:16px;text-decoration:none;padding:13px 24px;border-radius:calc(var(--radius) - 3px);border:2px solid transparent;cursor:pointer;font-family:"Nunito Sans",sans-serif}
+.btn.primary{background:var(--acc);color:var(--btn-ink)}
+.btn.primary:hover{background:var(--acc-deep)}
+.btn.ghost{border-color:var(--line-2);color:var(--ink);background:transparent}
+.btn.ghost:hover{border-color:var(--acc);color:var(--acc)}
+.open-note{font-weight:800;font-size:15px;color:var(--ink-2);margin-top:18px}
+.open-note .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--pop);margin-right:7px}
+.open-note.open .dot{background:var(--acc)}
+
+/* fanned hand */
+.hand{position:relative;height:350px;margin:0 auto;width:min(400px,90%)}
+.pcard{
+  position:absolute;left:50%;bottom:16px;width:170px;height:238px;border-radius:13px;
+  transform-origin:50% 118%;
+  background:
+    radial-gradient(circle at 50% 42%, var(--ground-2) 0 24%, transparent 24.5%),
+    repeating-linear-gradient(45deg, transparent 0 13px, rgba(0,0,0,.045) 13px 26px),
+    var(--card);
+  border:2px solid var(--line-2);box-shadow:var(--shadow);
+  display:flex;flex-direction:column;justify-content:space-between;padding:12px;
+  transition:transform .35s ease;
+}
+.pcard .corner{font-family:var(--display);font-weight:800;font-size:14px;color:var(--acc)}
+.pcard .game{font-family:var(--display);font-weight:700;font-style:italic;font-size:16px;color:var(--ink-2);text-align:center}
+.pcard .corner.b{align-self:flex-end;transform:rotate(180deg)}
+.pcard.c1{transform:translateX(-50%) rotate(-21deg)}
+.pcard.c2{transform:translateX(-50%) rotate(-7deg);z-index:5}
+.pcard.c3{transform:translateX(-50%) rotate(7deg);z-index:3}
+.pcard.c4{transform:translateX(-50%) rotate(21deg);z-index:4}
+.pcard.c2 .corner,.pcard.c2 .game{color:var(--pop)}
+.pcard.c3 .corner,.pcard.c3 .game{color:var(--alt)}
+@media(min-width:821px){
+  .hand:hover .c1{transform:translateX(-50%) rotate(-30deg) translateY(-6px)}
+  .hand:hover .c2{transform:translateX(-50%) rotate(-10deg) translateY(-12px)}
+  .hand:hover .c3{transform:translateX(-50%) rotate(10deg) translateY(-12px)}
+  .hand:hover .c4{transform:translateX(-50%) rotate(30deg) translateY(-6px)}
+}
+:root[data-skin="nexus"] .pcard,
+:root[data-skin="serial"] .pcard{border-color:var(--line-2)}
+.omg-sticker{
+  position:absolute;z-index:6;right:2%;top:2%;width:126px;height:126px;border-radius:50%;
+  background:var(--card);border:3px solid var(--ink);box-shadow:4px 5px 0 rgba(0,0,0,.18);
+  transform:rotate(9deg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+}
+.omg-sticker .omg-big{font-family:"Nunito Sans",sans-serif;font-weight:900;font-size:40px;letter-spacing:-.03em;line-height:1;color:var(--acc);text-shadow:2.5px 2.5px 0 var(--pop)}
+.omg-sticker .sub{font-weight:900;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2)}
+
+/* ---------- sections ---------- */
+section{padding:54px 0}
+.sec-head{margin-bottom:28px}
+.sec-head h2{font-size:clamp(27px,3.8vw,38px);font-weight:800;letter-spacing:-.015em}
+.sec-head .rule{width:72px;height:5px;border-radius:3px;background:var(--pop);margin-top:12px}
+.band{background:var(--ground-2)}
+:root[data-skin="surge"] .band{background:rgba(19,24,64,.5)}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:24px 22px;box-shadow:var(--shadow)}
+:root[data-skin="sakura"] .card:nth-child(odd){transform:rotate(-.5deg)}
+:root[data-skin="sakura"] .card:nth-child(even){transform:rotate(.5deg)}
+.card h3{font-size:21px;font-weight:700;margin-bottom:8px}
+.card p{margin:0;color:var(--ink-2);font-size:15.5px}
+.tag{display:inline-block;font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--acc-deep);background:var(--acc-soft);border-radius:999px;padding:4px 12px;margin-bottom:12px;font-family:"Nunito Sans",sans-serif}
+:root[data-skin="serial"] .tag,:root[data-skin="nexus"] .tag{color:var(--acc-deep)}
+
+.events{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:760px){.events{grid-template-columns:1fr}}
+.event{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:22px;text-align:center;box-shadow:var(--shadow)}
+.event.live{border-color:var(--acc)}
+:root[data-skin="nexus"] .event.live{border-color:transparent}
+.event .when{font-weight:900;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--pop);margin-bottom:8px}
+:root[data-skin="midnight"] .event .when{color:var(--acc)}
+.event h3{font-size:19.5px;margin-bottom:6px}
+.event p{margin:0;font-size:15px;color:var(--ink-2)}
+.events-note{margin-top:22px;font-size:15.5px;color:var(--ink-2)}
+
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+@media(max-width:820px){.visit{grid-template-columns:1fr}}
+.hours{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.hours table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+.hours caption{font-family:var(--display);font-weight:700;font-size:19px;text-align:left;padding:16px 20px 6px}
+.hours td{padding:10px 20px;border-top:1.5px solid var(--line);font-size:16px}
+.hours td:last-child{text-align:right;font-weight:800}
+.hours tr.closed td{color:var(--ink-3)}
+.hours tr.today td{background:var(--pop-soft);font-weight:800}
+:root[data-skin="serial"] .hours tr.today td,:root[data-skin="nexus"] .hours tr.today td{color:var(--ink)}
+.addr h3{font-family:var(--display);font-size:22px;margin-bottom:10px}
+.addr p{margin:0 0 8px;font-size:17px}
+.addr .big{font-family:var(--display);font-size:clamp(19px,2.5vw,22px);font-weight:800}
+.addr .actions{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 20px}
+
+.socials{display:flex;flex-wrap:wrap;gap:12px}
+.social{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:15px;color:var(--ink);background:var(--card);border:2px solid var(--line-2);border-radius:999px;padding:9px 18px;box-shadow:var(--shadow)}
+.social:hover{border-color:var(--acc);color:var(--acc-deep)}
+.ficon{display:inline-flex;align-items:center;justify-content:center;flex:none;width:24px;height:24px;border-radius:50%;margin-left:-6px;background:var(--acc-soft);color:var(--acc-deep);font-weight:900;font-size:10px}
+
+footer{border-top:2px solid var(--line-2);margin-top:30px;padding:30px 0 130px;color:var(--ink-2);font-size:14.5px}
+footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size:17px}
+.rates{margin-top:14px;max-width:430px}
+.rates summary{cursor:pointer;font-weight:800;color:var(--ink-2);font-size:13.5px}
+.rates table{border-collapse:collapse;width:100%;margin-top:10px;font-size:13.5px;font-variant-numeric:tabular-nums}
+.rates td{padding:5px 8px 5px 0;border-top:1px solid var(--line)}
+.rates td:last-child{text-align:right;font-weight:800}
+.rates .got{color:var(--acc)}
+.rates-hint{margin:10px 0 2px;font-size:12.5px;color:var(--ink-3)}
+.skin-try{background:none;border:none;padding:0;font:inherit;font-weight:800;color:var(--acc-deep);cursor:pointer;text-align:left}
+.skin-try:hover{text-decoration:underline}
+.mini-link{font-size:12.5px;padding:5px 12px;border-radius:999px;border:1.5px solid var(--line-2);background:none;color:var(--ink-2);cursor:pointer;font-weight:800;font-family:"Nunito Sans",sans-serif}
+
+
+/* ---------- owner announcement ---------- */
+.announce-wrap{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.45)}
+.announce-wrap.show{display:flex}
+.announce{background:var(--card);color:var(--ink);border:2.5px solid var(--acc);border-radius:var(--radius);max-width:480px;width:100%;padding:26px 24px;box-shadow:0 12px 40px rgba(0,0,0,.35);position:relative}
+.announce .a-label{font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--pop);margin-bottom:8px}
+.announce .a-text{font-size:17px;line-height:1.6;white-space:pre-line}
+.announce .a-close{position:absolute;top:10px;right:14px;border:none;background:none;font-size:18px;color:var(--ink-3);cursor:pointer;font-weight:900}
+/* ================= THE PULL TOAST ================= */
+.pull-toast{
+  position:fixed;left:18px;bottom:18px;z-index:50;max-width:310px;
+  background:var(--card);border:2.5px solid var(--line-2);border-radius:16px;
+  box-shadow:0 8px 28px rgba(0,0,0,.3);padding:16px 18px;
+  transform:translateY(0);transition:transform .35s ease,opacity .35s ease,visibility .35s;
+}
+.pull-toast.hidden{transform:translateY(140%);opacity:0;pointer-events:none;visibility:hidden}
+.pull-toast .pt-label{font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.pull-toast .pt-name{font-family:var(--display);font-weight:800;font-size:20px;line-height:1.2;color:var(--ink)}
+.pull-toast .pt-rarity{display:inline-block;margin:8px 0 12px;font-size:11.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;border-radius:999px;padding:3px 11px}
+.r-common{background:#DCE8DF;color:#2C5A42}
+.r-uncommon{background:#F3DCE8;color:#A03A67}
+.r-rare{background:#DCE4F5;color:#2E4E9E}
+.r-secret{background:linear-gradient(100deg,#F3E3AC,#FFF6D8,#F3E3AC);color:#7A5D10}
+.r-serial{background:#141414;color:#E8C963;border:1px solid #D4AF37}
+.r-shiny{background:linear-gradient(100deg,#F5C33B,#FFF0B0 50%,#F5C33B);background-size:200% 100%;color:#7A2A0E;border:1px solid #D2461E;animation:sheen 2.5s linear infinite}
+.r-one{background:linear-gradient(100deg,#FFD6E8,#D6FFF3 45%,#DAD6FF 75%,#FFD6E8);color:#3A2B4E;background-size:200% 100%;animation:sheen 3s linear infinite}
+.pull-toast .pt-row{display:flex;gap:8px;flex-wrap:wrap}
+.pull-toast .mini{font-size:13.5px;font-weight:800;padding:8px 14px;border-radius:999px;border:2px solid var(--line-2);background:transparent;color:var(--ink);cursor:pointer;font-family:"Nunito Sans",sans-serif}
+.pull-toast .mini:hover{border-color:var(--acc);color:var(--acc)}
+.pull-toast .mini.solid{background:var(--acc);border-color:var(--acc);color:var(--btn-ink)}
+.pull-toast .pt-close{position:absolute;top:8px;right:12px;border:none;background:none;font-size:16px;color:var(--ink-3);cursor:pointer;font-weight:900}
+@keyframes popin{0%{transform:translateY(30px) scale(.92);opacity:0}100%{transform:translateY(0) scale(1);opacity:1}}
+.pull-toast.fresh{animation:popin .45s cubic-bezier(.2,1.4,.4,1)}
 </style>
-</head>
-<body>
-<main class="card">
-  <img src="/assets/omg-black.png" alt="Off Meta Gaming" style="width:min(300px,70vw);height:auto;margin:0 auto 30px;display:block">
-  <h1>Something's brewing… 🎴</h1>
-  <p>The new Off Meta Gaming site is getting its final shuffle. Meanwhile, the shop's open and the games are firing — come say hi.</p>
-  <div class="links">
-    <a class="btn" href="https://discord.gg/c3nWQ8a9ea">Join the Discord</a>
-    <a class="btn ghost" href="tel:+15738030635">Call the shop</a>
+
+<script>
+/* Roll the skin BEFORE first paint of the body content. Weights are basis points (of 10,000). */
+(function(){
+  var SKINS=[
+    {id:"classic", name:"Classic",        rarity:"Common",      cls:"r-common",   w:3590, pct:"35.9%",  tc:"#2F6B4E"},
+    {id:"sakura",  name:"Sakura",         rarity:"Uncommon",    cls:"r-uncommon", w:2300, pct:"23%",    tc:"#E85D8A"},
+    {id:"beach",   name:"Beach Day",      rarity:"Uncommon",    cls:"r-uncommon", w:1200, pct:"12%",    tc:"#1FA5A0"},
+    {id:"retro",   name:"Retro '99",      rarity:"Uncommon",    cls:"r-uncommon", w:1000, pct:"10%",    tc:"#F5C518"},
+    {id:"manga",   name:"Manga",          rarity:"Rare",        cls:"r-rare",     w:500,  pct:"5%",     tc:"#111111"},
+    {id:"midnight",name:"Midnight Etched",rarity:"Rare",        cls:"r-rare",     w:800,  pct:"8%",     tc:"#0B0C14"},
+    {id:"surge",   name:"Surge Foil",     rarity:"Rare",        cls:"r-rare",     w:400,  pct:"4%",     tc:"#0E1230"},
+    {id:"gold",    name:"Gold Holo",      rarity:"Secret Rare", cls:"r-secret",   w:150,  pct:"1.5%",   tc:"#C9A227"},
+    {id:"serial",  name:"Serialized",     rarity:"Serialized",  cls:"r-serial",   w:45,   pct:"0.45%",  tc:"#0F0F0F"},
+    {id:"karp",    name:"Golden Karp",    rarity:"Shiny",       cls:"r-shiny",    w:10,   pct:"0.1%",   tc:"#F5C33B"},
+    {id:"nexus",   name:"The Nexus",      rarity:"One of One",  cls:"r-one",      w:5,    pct:"0.05%",  tc:"#05040F"}
+  ];
+  function byId(id){for(var i=0;i<SKINS.length;i++)if(SKINS[i].id===id)return SKINS[i];return null}
+  var RARE={manga:1,midnight:1,surge:1,gold:1,serial:1,nexus:1,karp:1};
+  function loadPity(){try{return parseInt(localStorage.getItem("omgPity")||"0",10)||0}catch(e){return 0}}
+  function savePity(n){try{localStorage.setItem("omgPity",String(n))}catch(e){}}
+  /* Real pull. Pity rule: 6 dry pulls without a Rare+ guarantee the next is Rare+. */
+  function roll(excludeId){
+    var pity=loadPity();
+    var pool=SKINS.filter(function(s){return s.id!==excludeId});
+    if(pity>=5){ var rp=pool.filter(function(s){return RARE[s.id]}); if(rp.length)pool=rp; }
+    var total=pool.reduce(function(a,s){return a+s.w},0), r=Math.random()*total, pick=pool[pool.length-1];
+    for(var i=0;i<pool.length;i++){ if((r-=pool[i].w)<0){ pick=pool[i]; break; } }
+    savePity(RARE[pick.id]?0:pity+1);
+    return pick;
+  }
+  var chosen=null,forced=false;
+  try{
+    var qs=new URLSearchParams(location.search).get("skin");
+    if(qs&&byId(qs)){ chosen=byId(qs); forced=true; }
+    if(!chosen){ var pinned=localStorage.getItem("omgSkin"); if(pinned&&byId(pinned)) chosen=byId(pinned); }
+  }catch(e){}
+  if(!chosen) chosen=roll(null);
+  try{
+    document.documentElement.dataset.skin=chosen.id;
+    document.documentElement.classList.add("js");
+  }catch(e){}
+  window.__omg={SKINS:SKINS, current:chosen, roll:roll, byId:byId, forced:forced};
+})();
+</script>
+
+<!-- decorative treatment layers (skin-gated, aria-hidden) -->
+<div class="petals" aria-hidden="true">
+  <span class="petal" style="left:7%;animation-duration:11s"></span>
+  <span class="petal" style="left:22%;animation-duration:14s;animation-delay:2s"></span>
+  <span class="petal" style="left:41%;animation-duration:12s;animation-delay:5s"></span>
+  <span class="petal" style="left:63%;animation-duration:15s;animation-delay:1s"></span>
+  <span class="petal" style="left:78%;animation-duration:10s;animation-delay:4s"></span>
+  <span class="petal" style="left:91%;animation-duration:13s;animation-delay:6s"></span>
+</div>
+<div class="fullart" aria-hidden="true"></div>
+<div class="stars" aria-hidden="true"></div>
+<div class="stars s2" aria-hidden="true"></div>
+<div class="nebula" aria-hidden="true"></div>
+<div class="retro-dots" aria-hidden="true"></div>
+<div class="manga-tone" aria-hidden="true"></div>
+<div class="manga-burst" aria-hidden="true"></div>
+<div class="retro-frame" aria-hidden="true"></div>
+<div class="retro-badge" aria-hidden="true">★ 1ST EDITION ’99</div>
+<div class="sheen" aria-hidden="true"></div>
+<div class="serial-fixed" aria-hidden="true" id="serialFixed">OMG № 0000/0500</div>
+<div class="one-stamp" aria-hidden="true">✦ 1/1 · THE NEXUS ✦</div>
+<span class="spark" style="top:12%;left:6%" aria-hidden="true">✦</span>
+<span class="spark" style="top:30%;right:8%;animation-delay:1s" aria-hidden="true">✦</span>
+<span class="spark" style="bottom:26%;left:12%;animation-delay:2s" aria-hidden="true">✦</span>
+<span class="spark" style="bottom:40%;right:14%;animation-delay:1.6s" aria-hidden="true">✦</span>
+<div class="karps" aria-hidden="true"><img class="karp" src="/assets/karp.svg" alt="" onerror="this.style.display='none'" style="width:150px;animation-duration:11s;animation-delay:-0s"><img class="karp" src="/assets/karp.svg" alt="" onerror="this.style.display='none'" style="width:90px;animation-duration:8s;animation-delay:-3s"><img class="karp" src="/assets/karp.svg" alt="" onerror="this.style.display='none'" style="width:200px;animation-duration:15s;animation-delay:-6s"><img class="karp" src="/assets/karp.svg" alt="" onerror="this.style.display='none'" style="width:70px;animation-duration:7s;animation-delay:-1.5s"><img class="karp" src="/assets/karp.svg" alt="" onerror="this.style.display='none'" style="width:120px;animation-duration:10s;animation-delay:-8s"><img class="karp" src="/assets/karp.svg" alt="" onerror="this.style.display='none'" style="width:60px;animation-duration:6s;animation-delay:-4.5s"><img class="karp" src="/assets/karp.svg" alt="" onerror="this.style.display='none'" style="width:170px;animation-duration:13s;animation-delay:-10s"></div>
+<div class="karp-stamp" aria-hidden="true">✨ GOLDEN KARP · 1/1000 ✨</div>
+
+<main>
+<div class="wrap">
+  <nav class="topbar" aria-label="Main">
+    <a class="wordmark" href="#top"><img class="wm li-light" src="/assets/omg-black.png" alt="" onerror="document.documentElement.classList.add('noimg')"><img class="wm li-dark" src="/assets/omg-white.png" alt="" onerror="document.documentElement.classList.add('noimg')"><span class="wm-text"><span class="omg" aria-hidden="true">OMG</span>Off Meta Gaming</span></a>
+    <div class="topnav">
+      <a href="#play">What we play</a>
+      <a href="#events">Events</a>
+      <a href="#singles">Singles</a>
+      <a href="#visit">Visit</a>
+      <a href="#socials">Socials</a>
+    </div>
+  </nav>
+</div>
+
+<header class="wrap hero" id="top">
+  <div>
+    <div class="kicker">Trading card games · Cape Girardeau, MO</div>
+    <h1><span class="holo">Play what you love</span>, <span class="hl">not the meta</span>.</h1>
+    <p class="lede">Magic, Pokémon, One Piece, and Riftbound under one roof — singles case, sealed wall, plush shelf, snacks, and a play hall that runs every day we're open.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="https://discord.gg/c3nWQ8a9ea" target="_blank" rel="noopener">Join the Discord</a>
+      <a class="btn ghost" href="#visit">Come by the shop</a>
+    </div>
+    <p class="open-note" id="openNote"><span class="dot" aria-hidden="true"></span>Open from 1 PM, Tuesday through Sunday</p>
+    <p class="serial-inline" id="serialInline">OMG № 0000/0500</p>
   </div>
-  <p class="foot">2104 William St, Cape Girardeau, MO · <a href="https://www.facebook.com/p/Off-Meta-Gaming-61579627653873/" style="color:var(--acc-deep)">Facebook</a></p>
+  <div class="hand" aria-hidden="true">
+    <div class="pcard c1"><span class="corner">P</span><span class="game">Pokémon</span><span class="corner b">P</span></div>
+    <div class="pcard c2"><span class="corner">M</span><span class="game">Magic: The&nbsp;Gathering</span><span class="corner b">M</span></div>
+    <div class="pcard c3"><span class="corner">R</span><span class="game">Riftbound</span><span class="corner b">R</span></div>
+    <div class="pcard c4"><span class="corner">O</span><span class="game">One Piece</span><span class="corner b">O</span></div>
+    <div class="omg-sticker"><img class="sticker-img li-light" src="/assets/omg-black.png" alt=""><img class="sticker-img li-dark" src="/assets/omg-white.png" alt=""><span class="sticker-text"><span class="omg-big">OMG</span><span class="sub">Off Meta Gaming</span></span></div>
+    <img class="sakura-poster" src="/assets/sakura-hero.jpg" alt="" onerror="document.documentElement.classList.add('noimg')">
+    <span class="beach-sleeve" aria-hidden="true"><img class="beach-poster" src="/assets/beach-hero.jpg" alt="" onerror="document.documentElement.classList.add('noimg')"><i class="sleeve-gloss"></i></span>
+  </div>
+</header>
+
+<section id="play">
+  <div class="wrap">
+    <div class="sec-head"><h2>What we play</h2><div class="rule"></div></div>
+    <div class="grid">
+      <div class="card"><span class="tag">Singles · Sealed · Play</span><h3>Magic: The Gathering</h3><p>Boosters, decks, and daily table play — official Wizards Play Network store, with special events Fridays and Saturdays.</p></div>
+      <div class="card"><span class="tag">Collect · Battle · Trade</span><h3>Pokémon TCG</h3><p>Cute pulls, chase cards, and a singles case that goes back to the old-school sets.</p></div>
+      <div class="card"><span class="tag">Set sail</span><h3>One Piece Card Game</h3><p>Boosters, starter decks, and crews clashing at the tables — the Grand Line runs through Cape.</p></div>
+      <div class="card"><span class="tag">League of Legends TCG</span><h3>Riftbound</h3><p>Official Riftbound network store — Nexus Nights 1v1, every single Sunday.</p></div>
+    </div>
+    <p style="margin-top:20px;color:var(--ink-2);font-size:15.5px">Plus <strong>Yu&#8209;Gi&#8209;Oh!</strong>, <strong>Gundam</strong>, and <strong>Digimon</strong> on the shelves, a wall of Squishmallows, and snacks &amp; drinks in the play hall.</p>
+  </div>
+</section>
+
+<section class="band" id="events">
+  <div class="wrap">
+    <div class="sec-head"><h2>Game nights</h2><div class="rule"></div></div>
+    <div class="events">
+      <div class="event live"><div class="when">Every Sunday · 2 PM</div><h3>Nexus Nights</h3><p>Riftbound 1v1, Swiss format. Bring a deck, claim the Nexus.</p></div>
+      <div class="event live"><div class="when">Daily · specials Fri &amp; Sat</div><h3>Magic at the tables</h3><p>Magic plays every day we're open, with special events on the weekend.</p></div>
+      <div class="event"><div class="when">Being reworked</div><h3>Pokémon league</h3><p>New league details drop on the socials soon.</p></div>
+    </div>
+    <p class="events-note">Schedules drop first on <a href="https://discord.gg/c3nWQ8a9ea" target="_blank" rel="noopener">the Discord</a> and <a href="https://www.facebook.com/p/Off-Meta-Gaming-61579627653873/" target="_blank" rel="noopener">Facebook</a>, or call <a href="tel:+15738030635">(573)&nbsp;803&#8209;0635</a>.</p>
+  </div>
+</section>
+
+<section id="singles">
+  <div class="wrap">
+    <div class="sec-head"><h2>Singles &amp; the case</h2><div class="rule"></div></div>
+    <div class="grid">
+      <div class="card"><h3>Browse or send a want list</h3><p>Dig through the binders and display case in store — or fill out the <a href="https://forms.gle/vCDwCnBuS9A6xnAJ6" target="_blank" rel="noopener">singles request form</a> and we'll check the case for you.</p></div>
+      <div class="card"><h3>The hold policy</h3><p>Pulled cards are held for one week. No pick-up and no word by then, and they go back in the case.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="visit">
+  <div class="wrap">
+    <div class="sec-head"><h2>Visit the shop</h2><div class="rule"></div></div>
+    <div class="visit">
+      <div class="hours">
+        <table id="hoursTable">
+          <caption>Hours</caption>
+          <tbody>
+            <tr data-day="1" class="closed"><td>Monday</td><td>Closed</td></tr>
+            <tr data-day="2"><td>Tuesday</td><td>1–6 PM</td></tr>
+            <tr data-day="3"><td>Wednesday</td><td>1–9 PM</td></tr>
+            <tr data-day="4"><td>Thursday</td><td>1–9 PM</td></tr>
+            <tr data-day="5"><td>Friday</td><td>1–9 PM</td></tr>
+            <tr data-day="6"><td>Saturday</td><td>1–9 PM</td></tr>
+            <tr data-day="0"><td>Sunday</td><td>1–6 PM</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="addr">
+        <h3>Off Meta Gaming</h3>
+        <p class="big">2104 William Street<br>Cape Girardeau, MO 63703</p>
+        <p><a href="tel:+15738030635">(573) 803-0635</a></p>
+        <div class="actions">
+          <a class="btn primary" href="https://www.google.com/maps/search/?api=1&query=Off+Meta+Gaming+2104+William+St+Cape+Girardeau+MO+63703" target="_blank" rel="noopener">Get directions</a>
+          <a class="btn ghost" href="tel:+15738030635">Call the shop</a>
+        </div>
+        <div class="socials" id="socials" style="scroll-margin-top:24px">
+          <a class="social" data-net="discord" href="https://discord.gg/c3nWQ8a9ea" target="_blank" rel="noopener"><span class="ficon" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" style="display:block"><path fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></span>Discord</a>
+          <a class="social" data-net="instagram" href="https://www.instagram.com/offmetasocials" target="_blank" rel="noopener"><span class="ficon" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" style="display:block"><rect x="2.8" y="2.8" width="18.4" height="18.4" rx="5" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="4.3" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="17.35" cy="6.65" r="1.45" fill="currentColor"/></svg></span>Instagram</a>
+          <a class="social" data-net="tiktok" href="https://www.tiktok.com/@offmetasocials" target="_blank" rel="noopener"><span class="ficon" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" style="display:block"><path fill="currentColor" d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></span>TikTok</a>
+          <a class="social" data-net="x" href="https://x.com/offmetasocials" target="_blank" rel="noopener"><span class="ficon" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" style="display:block"><path fill="currentColor" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></span>X</a>
+          <a class="social" data-net="facebook" href="https://www.facebook.com/p/Off-Meta-Gaming-61579627653873/" target="_blank" rel="noopener"><span class="ficon" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" style="display:block"><path fill="currentColor" d="M15.9 2.5h-2.7c-2.7 0-4.5 1.8-4.5 4.5v2.4H6v3.5h2.7v9.1h3.7v-9.1h3.1l.6-3.5h-3.7V7.3c0-.9.4-1.4 1.4-1.4h2.1z"/></svg></span>Facebook</a>
+        </div>
+        <div style="margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+          <span class="tag" style="margin-bottom:0">WPN store</span>
+          <span class="tag" style="margin-bottom:0">Riftbound network</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fm">Off Meta Gaming</div>
+    2104 William St, Cape Girardeau, MO 63703 · <a href="tel:+15738030635">(573) 803-0635</a> · Wed–Sat 1–9 PM · Tue &amp; Sun 1–6 PM
+    <div class="js-only">
+    <div style="margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13.5px;color:var(--ink-3)">
+      Every visit is a pull. <button class="mini-link" id="footerReroll">Pull again</button>
+    </div>
+    <details class="rates">
+      <summary>Pull rates &amp; your collection</summary>
+      <p class="rates-hint">Tap any skin to try it on. Trying on doesn't count — only real pulls earn a ✓. Pity rule: 6 pulls without a Rare or better guarantee one.</p>
+      <table aria-label="Skin pull rates"><tbody id="ratesBody"></tbody></table>
+    </details>
+    </div>
+    <div style="margin-top:16px"><a class="chamber-badge" href="http://capechamber.chambermaster.com/list/member/off-meta-gaming-8783" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:#1E2430;border-radius:10px;padding:6px 12px;text-decoration:none;vertical-align:middle;border:1px solid rgba(255,255,255,.16)"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOQAAABcCAYAAAB+zhmVAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA25pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo3OTFhYmQwOS1mNmVlLTQ0NTktYTdjMS0zZGJmYjg5ZTNkZWEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDQ2NDYwOTBDNUE3MTFFNjk1QTU5MjUyQkFFNjg5MDQiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDQ2NDYwOEZDNUE3MTFFNjk1QTU5MjUyQkFFNjg5MDQiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo2OTE2QTZEMzdFQzJFNjExQkY2ODg4QTBDMzc0NDNFOCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo3OTFhYmQwOS1mNmVlLTQ0NTktYTdjMS0zZGJmYjg5ZTNkZWEiLz4gPC9yZGY6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" alt="Cape Girardeau Area Chamber of Commerce" style="height:22px;width:auto;display:block"><span style="font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#FFFFFF">Proud<br>Member</span></a></div>
+  <div style="margin-top:14px;font-size:12.5px;opacity:.78">Site made by <a href="mailto:toddshandle@gmail.com?subject=Off%20Meta%20Gaming%20website">William Todd Aston</a></div>
+  </div>
+</footer>
 </main>
-</body>
-</html>
+
+<div class="announce-wrap" id="announceWrap" role="dialog" aria-modal="true" aria-label="Store announcement">
+  <div class="announce">
+    <button class="a-close" id="announceClose" aria-label="Dismiss">×</button>
+    <div class="a-label">From the shop</div>
+    <div class="a-text" id="announceText"></div>
+  </div>
+</div>
+
+<!-- THE PULL TOAST -->
+<div class="pull-toast fresh hidden" id="pullToast">
+  <button class="pt-close" id="ptClose" aria-label="Dismiss">×</button>
+  <div role="status">
+    <div class="pt-label" id="ptLabel">You pulled</div>
+    <div class="pt-name" id="ptName">Classic</div>
+    <span class="pt-rarity r-common" id="ptRarity">Common · 47%</span>
+  </div>
+  <div class="pt-row">
+    <button class="mini solid" id="ptReroll">Pull again</button>
+    <button class="mini" id="ptPin">Pin this skin</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var O=window.__omg;
+  var toast=document.getElementById("pullToast");
+  var metaTC=document.getElementById("metaThemeColor");
+
+  function pad(n,len){n=String(n);while(n.length<len)n="0"+n;return n}
+  function getSeen(){ try{var v=JSON.parse(localStorage.getItem("omgSkinsSeen")||"[]");return Array.isArray(v)?v:[]}catch(e){return []} }
+  function markSeen(id){
+    try{
+      var seen=getSeen();
+      if(seen.indexOf(id)<0){seen.push(id);localStorage.setItem("omgSkinsSeen",JSON.stringify(seen));}
+    }catch(e){}
+  }
+
+  function renderRates(){
+    var seen=getSeen(), rows="";
+    for(var i=0;i<O.SKINS.length;i++){
+      var s=O.SKINS[i], got=seen.indexOf(s.id)>=0;
+      rows+="<tr><td><button class='skin-try' data-id='"+s.id+"'>"+(got?"<span class='got'>✓</span> ":"· ")+s.name+"</button></td><td>"+s.rarity+"</td><td>"+s.pct+"</td></tr>";
+    }
+    document.getElementById("ratesBody").innerHTML=rows;
+  }
+
+  function show(s,fresh,previewing){
+    var name=s.name, label=previewing?"Trying on":"You pulled";
+    if(s.id==="serial"){
+      var serial="№ "+pad(1+Math.floor(Math.random()*500),4)+"/0500";
+      name="Serialized "+serial;
+      document.getElementById("serialFixed").textContent="OMG "+serial;
+      document.getElementById("serialInline").textContent="OMG "+serial;
+    }
+    if(s.id==="nexus"){ if(!previewing)label="⚡ One-of-one pull"; name="The Nexus · 1/1"; }
+    if(s.id==="karp"){ if(!previewing)label="✨ SHINY PULL ✨"; name="Golden Karp"; }
+    document.getElementById("ptLabel").textContent=label;
+    document.getElementById("ptName").textContent=name;
+    var r=document.getElementById("ptRarity");
+    r.textContent=s.rarity+" · "+s.pct;
+    r.className="pt-rarity "+s.cls;
+    toast.classList.remove("hidden");
+    if(fresh){toast.classList.remove("fresh");void toast.offsetWidth;toast.classList.add("fresh");}
+  }
+
+  function apply(s,fresh){
+    O.current=s;
+    document.documentElement.dataset.skin=s.id;
+    if(metaTC)metaTC.setAttribute("content",s.tc);
+    markSeen(s.id);
+    show(s,fresh);
+    renderRates();
+    try{ if(localStorage.getItem("omgSkin")) localStorage.setItem("omgSkin",s.id); }catch(e){}
+  }
+
+  /* Try-on: equips the look, counts for nothing. */
+  function tryOn(s){
+    O.current=s;
+    document.documentElement.dataset.skin=s.id;
+    if(metaTC)metaTC.setAttribute("content",s.tc);
+    show(s,true,true);
+  }
+  document.getElementById("ratesBody").addEventListener("click",function(ev){
+    var b=ev.target.closest("button.skin-try"); if(!b)return;
+    var s=O.byId(b.getAttribute("data-id")); if(s)tryOn(s);
+  });
+
+  if(metaTC)metaTC.setAttribute("content",O.current.tc);
+  if(!O.forced)markSeen(O.current.id);
+  show(O.current,true,O.forced);
+  renderRates();
+
+  function reroll(){ apply(O.roll(O.current.id),true); }
+  document.getElementById("ptReroll").addEventListener("click",reroll);
+  document.getElementById("footerReroll").addEventListener("click",function(){reroll();});
+  document.getElementById("ptClose").addEventListener("click",function(){toast.classList.add("hidden")});
+  document.getElementById("ptPin").addEventListener("click",function(){
+    var ok=false;
+    try{localStorage.setItem("omgSkin",O.current.id);ok=true;}catch(e){}
+    this.textContent=ok?"Pinned ✓":"Can't pin here";
+    var self=this;setTimeout(function(){self.textContent="Pin this skin"},1800);
+  });
+
+  // ===== owner-editable facts (config.json committed by the admin page) =====
+  var DAYKEY={1:"mon",2:"tue",3:"wed",4:"thu",5:"fri",6:"sat",0:"sun"};
+  var HOURS={mon:{closed:true},tue:{open:13,close:18},wed:{open:13,close:21},thu:{open:13,close:21},fri:{open:13,close:21},sat:{open:13,close:21},sun:{open:13,close:18}};
+  function h12(h){var x=h%12;return x===0?12:x}
+  function hlabel(d){return d.closed?"Closed":h12(d.open)+"–"+h12(d.close)+" PM"}
+  function renderHours(){
+    try{
+      for(var wd=0;wd<7;wd++){
+        var row=document.querySelector('#hoursTable tr[data-day="'+wd+'"]'); if(!row)continue;
+        var d=HOURS[DAYKEY[wd]]||{closed:true};
+        row.cells[1].textContent=hlabel(d);
+        row.classList.toggle("closed",!!d.closed);
+      }
+    }catch(e){}
+  }
+  function openNow(){
+    try{
+      var fmt=new Intl.DateTimeFormat("en-US",{timeZone:"America/Chicago",weekday:"short",hour:"numeric",hour12:false});
+      var parts=fmt.formatToParts(new Date());
+      var wd={Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6}[parts.find(function(p){return p.type==="weekday"}).value];
+      var hr=parseInt(parts.find(function(p){return p.type==="hour"}).value,10);
+      var row=document.querySelector('#hoursTable tr[data-day="'+wd+'"]');
+      if(row)row.classList.add("today");
+      var d=HOURS[DAYKEY[wd]]||{closed:true};
+      var note=document.getElementById("openNote");
+      if(!d.closed&&hr>=d.open&&hr<d.close){note.classList.add("open");note.innerHTML='<span class="dot" aria-hidden="true"></span>Open now — until '+h12(d.close)+' PM tonight';}
+      else if(!d.closed&&hr<d.open){note.classList.remove("open");note.innerHTML='<span class="dot" aria-hidden="true"></span>Opening at '+h12(d.open)+' PM today';}
+    }catch(e){}
+  }
+  function esc(t){var d=document.createElement("div");d.textContent=t==null?"":String(t);return d.innerHTML}
+  function applyFacts(cfg){
+    try{
+      if(cfg.hours){for(var k in HOURS)if(cfg.hours[k])HOURS[k]=cfg.hours[k];renderHours();}
+      if(cfg.phone){
+        var digits=String(cfg.phone).replace(/[^0-9]/g,"");
+        document.querySelectorAll('a[href^="tel:"]').forEach(function(a){
+          a.setAttribute("href","tel:+1"+digits.replace(/^1/,""));
+          if(/[0-9]/.test(a.textContent))a.textContent=cfg.phone;
+        });
+      }
+      if(cfg.socials){
+        document.querySelectorAll("[data-net]").forEach(function(a){
+          var u=cfg.socials[a.getAttribute("data-net")]; if(u)a.setAttribute("href",u);
+        });
+      }
+      if(cfg.events&&cfg.events.length){
+        var wrap=document.querySelector(".events");
+        if(wrap){wrap.innerHTML=cfg.events.map(function(ev){
+          return '<div class="event'+(ev.live?' live':'')+'"><div class="when">'+esc(ev.when)+'</div><h3>'+esc(ev.name)+'</h3><p>'+esc(ev.desc)+'</p></div>';
+        }).join("");}
+      }
+      var an=cfg.announcement;
+      if(an&&an.enabled&&an.text){
+        var seen=null; try{seen=localStorage.getItem("omgAnnounceDismissed")}catch(e){}
+        if(seen!==String(an.updatedAt||an.text)){
+          document.getElementById("announceText").textContent=an.text;
+          document.getElementById("announceWrap").classList.add("show");
+          document.getElementById("announceClose").onclick=function(){
+            document.getElementById("announceWrap").classList.remove("show");
+            try{localStorage.setItem("omgAnnounceDismissed",String(an.updatedAt||an.text))}catch(e){}
+          };
+        }
+      }
+    }catch(e){}
+  }
+  renderHours(); openNow();
+  var isPreview=false;
+  try{
+    if(new URLSearchParams(location.search).get("preview")==="admin"){
+      var pc=localStorage.getItem("omgPreviewCfg");
+      if(pc){
+        isPreview=true; applyFacts(JSON.parse(pc)); openNow();
+        var rb=document.createElement("div");
+        rb.style.cssText="position:fixed;top:0;left:0;right:0;z-index:70;background:#B03A2E;color:#fff;font:800 13px 'Nunito Sans',sans-serif;text-align:center;padding:8px 12px;letter-spacing:.05em";
+        rb.textContent="PREVIEW — not published yet. Only you can see this. Go back to the admin tab to publish.";
+        document.body.appendChild(rb);
+      }
+    }
+  }catch(e){}
+  if(!isPreview){
+    fetch("config.json",{cache:"no-store"}).then(function(r){
+      if(r.ok)return r.json();
+      return fetch("/config.json",{cache:"no-store"}).then(function(r2){return r2.ok?r2.json():null});
+    }).then(function(cfg){
+      if(cfg){applyFacts(cfg); openNow();}
+    }).catch(function(){});
+  }
+})();
+</script>
