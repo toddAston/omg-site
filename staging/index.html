@@ -7,6 +7,11 @@
 <meta property="og:site_name" content="Off Meta Gaming">
 <meta property="og:title" content="Off Meta Gaming — Play what you love, not the meta.">
 <meta property="og:description" content="Trading card shop in Cape Girardeau, MO — Magic, Pokémon, Yu-Gi-Oh!, Riftbound. Open Tue–Sun from 1 PM.">
+<meta property="og:image" content="https://offmetagaming.net/assets/og-beach.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="assets/favicon.png">
 <meta name="theme-color" content="#2F6B4E" id="metaThemeColor">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -300,6 +305,16 @@ main{position:relative;z-index:1}
 :root[data-skin="nexus"] .holo{background:linear-gradient(100deg,#7FF7E3,#B7A6FF 35%,#FF8FD8 65%,#7FF7E3 95%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 4.5s linear infinite}
 @keyframes sheen{0%{background-position:0 0}100%{background-position:220% 0}}
 
+/* ---------- brand marks ---------- */
+.wm{height:44px;width:auto;display:none}
+.sticker-img{width:74%;height:auto;display:none}
+.li-light{display:none}.li-dark{display:none}
+:root:not([data-skin="midnight"]):not([data-skin="surge"]):not([data-skin="serial"]):not([data-skin="nexus"]) .li-light{display:block}
+:root[data-skin="midnight"] .li-dark,:root[data-skin="surge"] .li-dark,:root[data-skin="serial"] .li-dark,:root[data-skin="nexus"] .li-dark{display:block}
+.sakura-poster{display:none}
+:root[data-skin="sakura"] .hand .pcard,:root[data-skin="sakura"] .hand .omg-sticker{display:none}
+:root[data-skin="sakura"] .sakura-poster{display:block;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-3deg);max-height:104%;width:auto;max-width:88%;border-radius:14px;border:3px solid #fff;box-shadow:0 10px 32px rgba(200,90,130,.35)}
+
 /* ---------- top bar ---------- */
 .topbar{display:flex;justify-content:space-between;align-items:center;padding:20px 0;gap:14px;flex-wrap:wrap}
 .wordmark{font-family:var(--display);font-weight:800;font-size:21px;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:10px}
@@ -528,7 +543,7 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
 <main>
 <div class="wrap">
   <nav class="topbar" aria-label="Main">
-    <a class="wordmark" href="#top"><span class="omg" aria-hidden="true">OMG</span>Off Meta Gaming</a>
+    <a class="wordmark" href="#top"><img class="wm li-light" src="assets/omg-black.png" alt="Off Meta Gaming"><img class="wm li-dark" src="assets/omg-white.png" alt="Off Meta Gaming"></a>
     <div class="topnav">
       <a href="#play">What we play</a>
       <a href="#events">Events</a>
@@ -556,7 +571,8 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
     <div class="pcard c2"><span class="corner">M</span><span class="game">Magic: The&nbsp;Gathering</span><span class="corner b">M</span></div>
     <div class="pcard c3"><span class="corner">R</span><span class="game">Riftbound</span><span class="corner b">R</span></div>
     <div class="pcard c4"><span class="corner">Y</span><span class="game">Yu&#8209;Gi&#8209;Oh!</span><span class="corner b">Y</span></div>
-    <div class="omg-sticker"><span class="omg-big">OMG</span><span class="sub">Off Meta Gaming</span></div>
+    <div class="omg-sticker"><img class="sticker-img li-light" src="assets/omg-black.png" alt=""><img class="sticker-img li-dark" src="assets/omg-white.png" alt=""></div>
+    <img class="sakura-poster" src="assets/sakura-hero.jpg" alt="">
   </div>
 </header>
 
