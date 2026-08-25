@@ -241,7 +241,7 @@ main{position:relative;z-index:1}
     repeating-linear-gradient(45deg,rgba(200,210,240,.045) 0 1px,transparent 1px 8px),
     repeating-linear-gradient(-45deg,rgba(200,210,240,.04) 0 1px,transparent 1px 8px);
 }
-:root[data-skin="midnight"] .hand .sleeve-card{display:none}
+:root[data-skin="midnight"] .hand .sleeve-card,:root[data-skin="midnight"] .hand .omg-sticker{display:none}
 :root[data-skin="midnight"] .omg-sticker{right:auto;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-4deg);width:230px;height:230px;
   border-color:#8E96B8;box-shadow:0 0 0 6px #1B1E33,0 0 0 7.5px #3F4569,0 14px 40px rgba(0,0,0,.65);
   background-image:repeating-linear-gradient(45deg,rgba(200,210,240,.05) 0 1px,transparent 1px 7px),repeating-linear-gradient(-45deg,rgba(200,210,240,.045) 0 1px,transparent 1px 7px)}
@@ -380,9 +380,9 @@ main{position:relative;z-index:1}
 :root[data-skin="halloween"] .holo{background:linear-gradient(100deg,#8FD0FF,#E9EEFF 45%,#8FD0FF 80%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 6s linear infinite}
 :root[data-skin="halloween"] .hand .sleeve-card,:root[data-skin="halloween"] .hand .omg-sticker{display:none}
 .halloween-poster{display:none}
-:root[data-skin="halloween"] .halloween-poster{display:block;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-2deg);max-height:104%;width:auto;max-width:88%;border-radius:14px;border:3px solid #8FD0FF;box-shadow:0 0 34px rgba(120,160,255,.45)}
+:root[data-skin="halloween"] .halloween-poster,:root[data-skin="midnight"] .halloween-poster{display:block;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-2deg);max-height:104%;width:auto;max-width:88%;border-radius:14px;border:3px solid #8FD0FF;box-shadow:0 0 34px rgba(120,160,255,.45)}
 :root.noimg .halloween-poster{display:none!important}
-:root.noimg[data-skin="halloween"] .hand .omg-sticker{display:flex}
+:root.noimg[data-skin="halloween"] .hand .omg-sticker,:root.noimg[data-skin="midnight"] .hand .omg-sticker{display:flex}
 
 /* --- golden karp: EXCESSIVE. gold everything + flying karps --- */
 :root[data-skin="karp"] body{background-image:radial-gradient(80% 55% at 50% -10%,rgba(255,215,80,.55),transparent 70%),radial-gradient(1.5px 1.5px at 40px 60px,rgba(210,170,40,.35),transparent),radial-gradient(1.5px 1.5px at 160px 140px,rgba(210,170,40,.3),transparent);background-size:auto,220px 200px,220px 200px}
