@@ -38,15 +38,33 @@
   "phone": "(573) 803-0635",
   "events": [
     {
-      "when": "Every Sunday · 2 PM",
-      "name": "Nexus Nights",
-      "desc": "Riftbound 1v1, Swiss format. Bring a deck, claim the Nexus.",
-      "live": true
-    },
-    {
       "when": "Daily · specials Fri & Sat",
       "name": "Magic at the tables",
       "desc": "Magic plays every day we're open, with special events on the weekend.",
+      "live": true
+    },
+    {
+      "when": "Every Tuesday · All day",
+      "name": "Tabletop Tuesdays",
+      "desc": "D&D, board games, and Warhammer all day. Bring a party or join one.",
+      "live": true
+    },
+    {
+      "when": "Every Wednesday · 6 PM",
+      "name": "Gundam night",
+      "desc": "The Gundam card game takes the tables.",
+      "live": true
+    },
+    {
+      "when": "Thursday & Saturday · 6 PM",
+      "name": "One Piece nights",
+      "desc": "One Piece Card Game, twice a week. Set sail with a crew.",
+      "live": true
+    },
+    {
+      "when": "Every Sunday · 2 PM",
+      "name": "Nexus Nights",
+      "desc": "Riftbound 1v1, Swiss format. Bring a deck, claim the Nexus.",
       "live": true
     },
     {
