@@ -575,6 +575,16 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
 .mini-link{font-size:12.5px;padding:5px 12px;border-radius:999px;border:1.5px solid var(--line-2);background:none;color:var(--ink-2);cursor:pointer;font-weight:800;font-family:"Nunito Sans",sans-serif}
 
 
+/* ---------- photo gallery ---------- */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.gtile{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius);border:2px solid var(--line);box-shadow:var(--shadow);cursor:pointer;display:block}
+.gtile:hover{border-color:var(--acc)}
+:root[data-skin="manga"] .gtile{filter:grayscale(1)}
+.lightbox{position:fixed;inset:0;z-index:58;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.82);cursor:zoom-out}
+.lightbox.show{display:flex}
+.lightbox img{max-width:94vw;max-height:82vh;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.lightbox .lb-cap{position:absolute;bottom:26px;left:0;right:0;text-align:center;color:#fff;font-weight:700;font-size:15px;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+
 /* ---------- owner announcement ---------- */
 .announce-wrap{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.45)}
 .announce-wrap.show{display:flex}
@@ -709,6 +719,7 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
       <a href="#events">Events</a>
       <a href="#singles">Singles</a>
       <a href="#visit">Visit</a>
+      <a href="#gallery" id="navPhotos" style="display:none">Photos</a>
       <a href="#socials">Socials</a>
     </div>
   </nav>
@@ -813,6 +824,19 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
     </div>
   </div>
 </section>
+
+<section id="gallery" style="display:none">
+  <div class="wrap">
+    <div class="sec-head"><h2>Photos</h2><div class="rule"></div></div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+    <p class="events-note" id="galleryFb" style="display:none"><a id="galleryFbLink" href="#" target="_blank" rel="noopener">See more on our Facebook</a></p>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <img id="lbImg" src="" alt="">
+  <div class="lb-cap" id="lbCap"></div>
+</div>
 
 <footer>
   <div class="wrap">
@@ -967,6 +991,31 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
     }catch(e){}
   }
   function esc(t){var d=document.createElement("div");d.textContent=t==null?"":String(t);return d.innerHTML}
+  function renderGallery(list,fbUrl){
+    try{
+      if(!list||!list.length)return;
+      var grid=document.getElementById("galleryGrid");
+      grid.innerHTML=list.map(function(g){
+        var cap=esc(g.caption||"");
+        return '<img class="gtile" loading="lazy" src="/assets/gallery/'+encodeURIComponent(g.file)+'" alt="'+(cap||"Photo of the shop")+'" data-cap="'+cap+'">';
+      }).join("");
+      document.getElementById("gallery").style.display="";
+      var nav=document.getElementById("navPhotos"); if(nav)nav.style.display="";
+      if(fbUrl){var fb=document.getElementById("galleryFb");fb.style.display="";document.getElementById("galleryFbLink").setAttribute("href",fbUrl);}
+      grid.onclick=function(ev){
+        var t=ev.target.closest(".gtile"); if(!t)return;
+        document.getElementById("lbImg").src=t.src;
+        document.getElementById("lbImg").alt=t.alt;
+        document.getElementById("lbCap").textContent=t.getAttribute("data-cap")||"";
+        document.getElementById("lightbox").classList.add("show");
+      };
+    }catch(e){}
+  }
+  (function(){
+    var lb=document.getElementById("lightbox");
+    lb.addEventListener("click",function(){lb.classList.remove("show")});
+    document.addEventListener("keydown",function(ev){if(ev.key==="Escape")lb.classList.remove("show")});
+  })();
   function applyFacts(cfg){
     try{
       if(cfg.hours){for(var k in HOURS)if(cfg.hours[k])HOURS[k]=cfg.hours[k];renderHours();}
@@ -988,6 +1037,7 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
           return '<div class="event'+(ev.live?' live':'')+'"><div class="when">'+esc(ev.when)+'</div><h3>'+esc(ev.name)+'</h3><p>'+esc(ev.desc)+'</p></div>';
         }).join("");}
       }
+      if(cfg.gallery)renderGallery(cfg.gallery,cfg.socials&&cfg.socials.facebook);
       var an=cfg.announcement;
       if(an&&an.enabled&&an.text){
         var seen=null; try{seen=localStorage.getItem("omgAnnounceDismissed")}catch(e){}

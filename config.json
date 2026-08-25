@@ -62,5 +62,42 @@
     "tiktok": "https://www.tiktok.com/@offmetasocials",
     "x": "https://x.com/offmetasocials",
     "facebook": "https://www.facebook.com/p/Off-Meta-Gaming-61579627653873/"
-  }
+  },
+  "gallery": [
+    {
+      "file": "photo-1787629549173.jpg",
+      "caption": "The play hall, ready for game night",
+      "added": "2026-08-25"
+    },
+    {
+      "file": "photo-1787629549174.jpg",
+      "caption": "Playmats down, doors open",
+      "added": "2026-08-25"
+    },
+    {
+      "file": "photo-1787629549175.jpg",
+      "caption": "Event tables set and waiting",
+      "added": "2026-08-25"
+    },
+    {
+      "file": "photo-1787629549176.jpg",
+      "caption": "The hall from the back corner",
+      "added": "2026-08-25"
+    },
+    {
+      "file": "photo-1787629549177.jpg",
+      "caption": "The retail floor",
+      "added": "2026-08-25"
+    },
+    {
+      "file": "photo-1787629549178.jpg",
+      "caption": "Singles wall and sealed shelves",
+      "added": "2026-08-25"
+    },
+    {
+      "file": "photo-1787629549179.jpg",
+      "caption": "The Pokémon wall",
+      "added": "2026-08-25"
+    }
+  ]
 }

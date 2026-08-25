@@ -43,6 +43,9 @@ input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-vis
 .hoursgrid{display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:8px 12px;align-items:center;font-variant-numeric:tabular-nums}
 .hoursgrid .dh{font-weight:900;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
 .evrow{border:1.5px dashed var(--line-2);border-radius:10px;padding:14px;margin-bottom:12px}
+.prow{display:flex;gap:12px;align-items:center;border:1.5px dashed var(--line-2);border-radius:10px;padding:10px;margin-bottom:10px}
+.prow img{width:84px;height:63px;object-fit:cover;border-radius:6px;flex:none}
+.prow input{flex:1}
 .evrow .row{margin-bottom:10px}
 .checkline{display:flex;gap:10px;align-items:center;font-weight:800}
 .checkline input{width:20px;height:20px;accent-color:var(--acc)}
@@ -93,6 +96,17 @@ a{color:var(--acc-deep)}
       <h2>🃏 Game nights</h2>
       <div id="events"></div>
       <button class="btn ghost small" id="addEvent">+ Add event</button>
+    </div>
+
+    <div class="panel">
+      <h2>📷 Photos</h2>
+      <div id="photoRows"></div>
+      <div class="row" style="align-items:center;margin-top:10px">
+        <div><input type="file" id="photoFile" accept="image/*"></div>
+        <div style="flex:0"><button class="btn ghost small" id="addPhoto">＋ Add photo</button></div>
+      </div>
+      <p class="note">Photos are shrunk for the web automatically. New ones show at the top. They go live with the normal Publish flow.</p>
+      <div id="photoMsg"></div>
     </div>
 
     <div class="panel">
@@ -205,6 +219,7 @@ a{color:var(--acc-deep)}
     $("anOn").checked=!!cfg.announcement.enabled;
     $("anText").value=cfg.announcement.text||"";
     buildHours();
+    buildPhotos();
     cfg.events.forEach(function(ev){$("events").appendChild(evRow(ev))});
     $("addEvent").addEventListener("click",function(){$("events").appendChild(evRow({live:true}))});
     $("phone").value=cfg.phone||"";
@@ -233,11 +248,99 @@ a{color:var(--acc-deep)}
               desc:r.querySelector('[data-f="desc"]').value.trim(),
               live:r.querySelector('[data-f="live"]').checked};
     }).filter(function(e){return e.name});
+    out.gallery=collectPhotos();
     out.phone=$("phone").value.trim();
     out.socials={};
     NETS.forEach(function(n){out.socials[n[0]]=document.querySelector('input[data-net="'+n[0]+'"]').value.trim()});
     out.updatedAt=now;
     return out;
+  }
+
+  /* ---------- photos ---------- */
+  var galWork=[], galRemoved=[];
+  function pmsg(kind,text){$("photoMsg").innerHTML=text?('<div class="msg '+kind+'">'+text+'</div>'):""}
+  function photoRow(g){
+    var d=document.createElement("div");d.className="prow";
+    d.innerHTML='<img src="/assets/gallery/'+encodeURIComponent(g.file)+'" alt="">'
+      +'<input type="text" placeholder="Caption (optional)" data-pcap>'
+      +'<button class="btn danger small" data-pdel>Remove</button>';
+    d.querySelector("[data-pcap]").value=g.caption||"";
+    d.querySelector("[data-pdel]").addEventListener("click",function(){
+      if(g._published)galRemoved.push(g.file);
+      galWork=galWork.filter(function(x){return x!==g});
+      d.remove(); lockPub();
+    });
+    d._entry=g;
+    return d;
+  }
+  function buildPhotos(){
+    galWork=(cfg.gallery||[]).map(function(g){return {file:g.file,caption:g.caption||"",added:g.added,_published:true}});
+    var w=$("photoRows"); w.innerHTML="";
+    galWork.forEach(function(g){w.appendChild(photoRow(g))});
+  }
+  function collectPhotos(){
+    return Array.from($("photoRows").children).map(function(d){
+      return {file:d._entry.file,caption:d.querySelector("[data-pcap]").value.trim(),added:d._entry.added||new Date().toISOString().slice(0,10)};
+    });
+  }
+  function resizePhoto(file){
+    return new Promise(function(res,rej){
+      var img=new Image(), url=URL.createObjectURL(file);
+      img.onload=function(){
+        var sc=Math.min(1,1600/Math.max(img.width,img.height));
+        var c=document.createElement("canvas");c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);
+        c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+        c.toBlob(function(b){
+          URL.revokeObjectURL(url);
+          if(!b)return rej("encode");
+          if(b.size>900*1024){c.toBlob(function(b2){(b2&&b2.size<=900*1024)?res(b2):rej("too-big")},"image/jpeg",0.6);}
+          else res(b);
+        },"image/jpeg",0.82);
+      };
+      img.onerror=function(){URL.revokeObjectURL(url);rej("decode")};
+      img.src=url;
+    });
+  }
+  $("addPhoto").addEventListener("click",function(){
+    var f=$("photoFile").files[0];
+    if(!f){pmsg("err","Pick a photo first.");return}
+    var token=getToken()||($("token")?$("token").value.trim():"");
+    if(!token){pmsg("err","Paste the publish key first (in the Publish key box below).");return}
+    pmsg("ok","Shrinking photo…");
+    resizePhoto(f).then(function(blob){
+      pmsg("ok","Uploading…");
+      var name="photo-"+Date.now()+".jpg";
+      var rd=new FileReader();
+      rd.onload=function(){
+        var b64=String(rd.result).split(",")[1];
+        fetch("https://api.github.com/repos/"+REPO+"/contents/assets/gallery/"+name,{
+          method:"PUT",headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json"},
+          body:JSON.stringify({message:"Shop admin: add photo",content:b64})
+        }).then(function(r){
+          if(r.status===401||r.status===403){authFail();pmsg("err","That publish key didn't work. Paste a fresh one and try again.");return}
+          if(!r.ok){pmsg("err","GitHub error "+r.status+". Try again.");return}
+          var g={file:name,caption:"",added:new Date().toISOString().slice(0,10),_published:false};
+          galWork.unshift(g);
+          $("photoRows").insertBefore(photoRow(g),$("photoRows").firstChild);
+          $("photoFile").value="";
+          pmsg("ok","Photo uploaded ✓ Now add a caption if you want, then Publish to put it on the site.");
+          lockPub();
+        }).catch(function(){pmsg("err","Couldn't upload. Check the connection and try again.")});
+      };
+      rd.readAsDataURL(blob);
+    }).catch(function(e){
+      pmsg("err",e==="decode"?"That photo format didn't work here. Try a screenshot or JPEG.":e==="too-big"?"That photo is too large even after shrinking. Try a screenshot of it.":"Couldn't process that photo.");
+    });
+  });
+  function cleanupRemoved(token){
+    galRemoved.forEach(function(file){
+      var url="https://api.github.com/repos/"+REPO+"/contents/assets/gallery/"+file;
+      fetch(url+"?t="+Date.now(),{headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json"}})
+        .then(function(r){return r.ok?r.json():null})
+        .then(function(j){ if(j&&j.sha)return fetch(url,{method:"DELETE",headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json"},body:JSON.stringify({message:"Shop admin: remove photo",sha:j.sha})}); })
+        .catch(function(){});
+    });
+    galRemoved=[];
   }
 
   /* ---------- token ---------- */
@@ -259,6 +362,7 @@ a{color:var(--acc-deep)}
       out.push("Announcement: "+(now.announcement.enabled?"ON":"off")+(now.announcement.text!==was.announcement.text?" (text changed)":""));
     if(JSON.stringify(now.hours)!==JSON.stringify(was.hours))out.push("Hours changed");
     if(JSON.stringify(now.events)!==JSON.stringify(was.events))out.push("Events changed ("+now.events.length+" listed)");
+    if(JSON.stringify(now.gallery)!==JSON.stringify(was.gallery||[]))out.push("Photos changed ("+now.gallery.length+" shown)");
     if(now.phone!==was.phone)out.push("Phone: "+was.phone+" → "+now.phone);
     if(JSON.stringify(now.socials)!==JSON.stringify(was.socials||{}))out.push("Social links changed");
     return out;
@@ -317,6 +421,8 @@ a{color:var(--acc-deep)}
       if(typed)setToken(typed);
       refreshTokenUI();
       cfg=collect();
+      galWork.forEach(function(g){g._published=true});
+      cleanupRemoved(getToken()||typed);
       try{localStorage.removeItem("omgPreviewCfg")}catch(e){}
       lockPub();
       msg("ok","✅ Published! The site updates for everyone in about a minute.");
