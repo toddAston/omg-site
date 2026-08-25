@@ -228,7 +228,7 @@ main{position:relative;z-index:1}
     repeating-linear-gradient(45deg,rgba(200,210,240,.045) 0 1px,transparent 1px 8px),
     repeating-linear-gradient(-45deg,rgba(200,210,240,.04) 0 1px,transparent 1px 8px);
 }
-:root[data-skin="midnight"] .hand .pcard{display:none}
+:root[data-skin="midnight"] .hand .sleeve-card{display:none}
 :root[data-skin="midnight"] .omg-sticker{right:auto;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-4deg);width:230px;height:230px;
   border-color:#8E96B8;box-shadow:0 0 0 6px #1B1E33,0 0 0 7.5px #3F4569,0 14px 40px rgba(0,0,0,.65);
   background-image:repeating-linear-gradient(45deg,rgba(200,210,240,.05) 0 1px,transparent 1px 7px),repeating-linear-gradient(-45deg,rgba(200,210,240,.045) 0 1px,transparent 1px 7px)}
@@ -394,11 +394,10 @@ main{position:relative;z-index:1}
 :root.noimg .wm,:root.noimg .sticker-img,:root.noimg .sakura-poster,:root.noimg .beach-poster,:root.noimg .beach-sleeve{display:none!important}
 :root.noimg .wm-text{display:flex}
 :root.noimg .sticker-text{display:flex}
-:root.noimg[data-skin="sakura"] .hand .pcard,:root.noimg[data-skin="beach"] .hand .pcard{display:flex}
 :root.noimg[data-skin="sakura"] .hand .omg-sticker,:root.noimg[data-skin="beach"] .hand .omg-sticker{display:flex}
 .sakura-poster,.beach-poster{display:none}
-:root[data-skin="sakura"] .hand .pcard,:root[data-skin="sakura"] .hand .omg-sticker{display:none}
-:root[data-skin="beach"] .hand .pcard,:root[data-skin="beach"] .hand .omg-sticker{display:none}
+:root[data-skin="sakura"] .hand .sleeve-card,:root[data-skin="sakura"] .hand .omg-sticker{display:none}
+:root[data-skin="beach"] .hand .sleeve-card,:root[data-skin="beach"] .hand .omg-sticker{display:none}
 .beach-sleeve{display:none}
 :root[data-skin="beach"] .beach-sleeve{display:block;position:absolute;left:50%;top:50%;padding:10px;background:linear-gradient(160deg,#FFFFFF,#F2FBFA);border-radius:22px;
   box-shadow:0 0 0 3px #1FA5A0,0 18px 44px rgba(180,100,30,.4);
@@ -435,6 +434,19 @@ main{position:relative;z-index:1}
 .open-note{font-weight:800;font-size:15px;color:var(--ink-2);margin-top:18px}
 .open-note .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--pop);margin-right:7px}
 .open-note.open .dot{background:var(--acc)}
+
+/* fanned hand: the store's actual sleeves */
+.sleeve-card{position:absolute;left:50%;bottom:10px;height:295px;width:auto;border-radius:12px;transform-origin:50% 115%;box-shadow:0 10px 26px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.9);transition:transform .35s ease}
+.sleeve-card.s1{transform:translateX(-50%) rotate(-16deg)}
+.sleeve-card.s3{transform:translateX(-50%) rotate(16deg);z-index:2}
+.sleeve-card.s2{transform:translateX(-50%) translateY(-10px);z-index:3}
+@media(min-width:821px){
+  .hand:hover .s1{transform:translateX(-50%) rotate(-24deg) translateY(-6px)}
+  .hand:hover .s3{transform:translateX(-50%) rotate(24deg) translateY(-6px)}
+  .hand:hover .s2{transform:translateX(-50%) translateY(-22px)}
+}
+:root[data-skin="manga"] .sleeve-card{filter:grayscale(1) contrast(1.05)}
+:root.noimg .sleeve-card{display:none}
 
 /* fanned hand */
 .hand{position:relative;height:350px;margin:0 auto;width:min(400px,90%)}
@@ -688,10 +700,9 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
     <p class="serial-inline" id="serialInline">OMG № 0000/0500</p>
   </div>
   <div class="hand" aria-hidden="true">
-    <div class="pcard c1"><span class="corner">P</span><span class="game">Pokémon</span><span class="corner b">P</span></div>
-    <div class="pcard c2"><span class="corner">M</span><span class="game">Magic: The&nbsp;Gathering</span><span class="corner b">M</span></div>
-    <div class="pcard c3"><span class="corner">R</span><span class="game">Riftbound</span><span class="corner b">R</span></div>
-    <div class="pcard c4"><span class="corner">O</span><span class="game">One Piece</span><span class="corner b">O</span></div>
+    <img class="sleeve-card s1" src="/assets/sakura-hero.jpg" alt="" onerror="document.documentElement.classList.add('noimg')">
+    <img class="sleeve-card s3" src="/assets/beach-hero.jpg" alt="">
+    <img class="sleeve-card s2" src="/assets/sleeve-mono.jpg" alt="">
     <div class="omg-sticker"><img class="sticker-img li-light" src="/assets/omg-black.png" alt=""><img class="sticker-img li-dark" src="/assets/omg-white.png" alt=""><span class="sticker-text"><span class="omg-big">OMG</span><span class="sub">Off Meta Gaming</span></span></div>
     <img class="sakura-poster" src="/assets/sakura-hero.jpg" alt="" onerror="document.documentElement.classList.add('noimg')">
     <span class="beach-sleeve" aria-hidden="true"><img class="beach-poster" src="/assets/beach-hero.jpg" alt="" onerror="document.documentElement.classList.add('noimg')"><i class="sleeve-gloss"></i></span>
