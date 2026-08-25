@@ -87,6 +87,19 @@
   --display:"Zen Maru Gothic","Baloo 2",sans-serif;
   --accent-font:"Zen Maru Gothic",sans-serif;
 }
+:root[data-skin="halloween"]{
+  --ground:#0B0E22; --ground-2:#111530; --card:#141938;
+  --ink:#E9EEFF; --ink-2:#AEB8E0; --ink-3:#7C86B4;
+  --acc:#8FD0FF; --acc-deep:#B5E0FF; --acc-soft:#12294A;
+  --pop:#F08A24; --pop-soft:#3A2410;
+  --alt:#5E9C77; --alt-soft:#14301F;
+  --line:#232A52; --line-2:#3A4380;
+  --btn-ink:#0A0D1E;
+  --shadow:0 6px 24px rgba(0,0,0,.6);
+  --radius:14px;
+  --display:"Fraunces","Georgia",serif;
+  --accent-font:"Fraunces",serif;
+}
 :root[data-skin="retro"]{
   --ground:#F4E8C1; --ground-2:#EAD9A6; --card:#FBF3D8;
   --ink:#2A2314; --ink-2:#5C4F2E; --ink-3:#8A7A50;
@@ -358,6 +371,19 @@ main{position:relative;z-index:1}
 :root[data-skin="manga"] .btn.primary{background:#111;box-shadow:4px 4px 0 rgba(17,17,17,.25)}
 :root[data-skin="manga"] .omg-sticker{box-shadow:6px 6px 0 #111}
 
+/* --- halloween: moonlit haunt, ghost-sleeve hero, falling leaves, fireflies --- */
+:root[data-skin="halloween"] .petals{display:block;position:fixed;inset:0;pointer-events:none;z-index:0}
+:root[data-skin="halloween"] .petal{background:#4E7D5B;opacity:.7;border-radius:60% 40% 70% 30%}
+:root[data-skin="halloween"] .spark{display:block;position:fixed;pointer-events:none;font-size:14px;color:#8FD0FF;animation:tw 2.6s ease-in-out infinite;z-index:0;text-shadow:0 0 10px rgba(143,208,255,.9)}
+:root[data-skin="halloween"] body{background-image:radial-gradient(70% 45% at 50% -8%,rgba(120,150,255,.22),transparent 70%)}
+:root[data-skin="halloween"] .event.live{border-color:var(--pop)}
+:root[data-skin="halloween"] .holo{background:linear-gradient(100deg,#8FD0FF,#E9EEFF 45%,#8FD0FF 80%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 6s linear infinite}
+:root[data-skin="halloween"] .hand .sleeve-card,:root[data-skin="halloween"] .hand .omg-sticker{display:none}
+.halloween-poster{display:none}
+:root[data-skin="halloween"] .halloween-poster{display:block;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-2deg);max-height:104%;width:auto;max-width:88%;border-radius:14px;border:3px solid #8FD0FF;box-shadow:0 0 34px rgba(120,160,255,.45)}
+:root.noimg .halloween-poster{display:none!important}
+:root.noimg[data-skin="halloween"] .hand .omg-sticker{display:flex}
+
 /* --- golden karp: EXCESSIVE. gold everything + flying karps --- */
 :root[data-skin="karp"] body{background-image:radial-gradient(80% 55% at 50% -10%,rgba(255,215,80,.55),transparent 70%),radial-gradient(1.5px 1.5px at 40px 60px,rgba(210,170,40,.35),transparent),radial-gradient(1.5px 1.5px at 160px 140px,rgba(210,170,40,.3),transparent);background-size:auto,220px 200px,220px 200px}
 :root[data-skin="karp"] .sheen{display:block;position:fixed;inset:0;z-index:40;pointer-events:none;mix-blend-mode:overlay;opacity:.85;
@@ -587,11 +613,12 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
 /* Roll the skin BEFORE first paint of the body content. Weights are basis points (of 10,000). */
 (function(){
   var SKINS=[
-    {id:"classic", name:"Classic",        rarity:"Common",      cls:"r-common",   w:3590, pct:"35.9%",  tc:"#2F6B4E"},
+    {id:"classic", name:"Classic",        rarity:"Common",      cls:"r-common",   w:3290, pct:"32.9%",  tc:"#2F6B4E"},
     {id:"sakura",  name:"Sakura",         rarity:"Uncommon",    cls:"r-uncommon", w:2300, pct:"23%",    tc:"#E85D8A"},
     {id:"beach",   name:"Beach Day",      rarity:"Uncommon",    cls:"r-uncommon", w:1200, pct:"12%",    tc:"#1FA5A0"},
     {id:"retro",   name:"Retro '99",      rarity:"Uncommon",    cls:"r-uncommon", w:1000, pct:"10%",    tc:"#F5C518"},
     {id:"manga",   name:"Manga",          rarity:"Rare",        cls:"r-rare",     w:500,  pct:"5%",     tc:"#111111"},
+    {id:"halloween",name:"Halloween",     rarity:"Rare",        cls:"r-rare",     w:300,  pct:"3%",     tc:"#0B0E22"},
     {id:"midnight",name:"Midnight Etched",rarity:"Rare",        cls:"r-rare",     w:800,  pct:"8%",     tc:"#0B0C14"},
     {id:"surge",   name:"Surge Foil",     rarity:"Rare",        cls:"r-rare",     w:400,  pct:"4%",     tc:"#0E1230"},
     {id:"gold",    name:"Gold Holo",      rarity:"Secret Rare", cls:"r-secret",   w:150,  pct:"1.5%",   tc:"#C9A227"},
@@ -600,7 +627,7 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
     {id:"nexus",   name:"The Nexus",      rarity:"One of One",  cls:"r-one",      w:5,    pct:"0.05%",  tc:"#05040F"}
   ];
   function byId(id){for(var i=0;i<SKINS.length;i++)if(SKINS[i].id===id)return SKINS[i];return null}
-  var RARE={manga:1,midnight:1,surge:1,gold:1,serial:1,nexus:1,karp:1};
+  var RARE={manga:1,halloween:1,midnight:1,surge:1,gold:1,serial:1,nexus:1,karp:1};
   function loadPity(){try{return parseInt(localStorage.getItem("omgPity")||"0",10)||0}catch(e){return 0}}
   function savePity(n){try{localStorage.setItem("omgPity",String(n))}catch(e){}}
   /* Real pull. Pity rule: 6 dry pulls without a Rare+ guarantee the next is Rare+. */
@@ -706,6 +733,7 @@ footer .fm{font-family:var(--display);font-weight:800;color:var(--ink);font-size
     <div class="omg-sticker"><img class="sticker-img li-light" src="/assets/omg-black.png" alt=""><img class="sticker-img li-dark" src="/assets/omg-white.png" alt=""><span class="sticker-text"><span class="omg-big">OMG</span><span class="sub">Off Meta Gaming</span></span></div>
     <img class="sakura-poster" src="/assets/sakura-hero.jpg" alt="" onerror="document.documentElement.classList.add('noimg')">
     <span class="beach-sleeve" aria-hidden="true"><img class="beach-poster" src="/assets/beach-hero.jpg" alt="" onerror="document.documentElement.classList.add('noimg')"><i class="sleeve-gloss"></i></span>
+    <img class="halloween-poster" src="/assets/halloween-sleeve.jpg" alt="" onerror="document.documentElement.classList.add('noimg')">
   </div>
 </header>
 
