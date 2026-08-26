@@ -432,7 +432,7 @@ a{color:var(--acc-deep)}
   });
 
   /* ---------- staged site version: view -> one-time deploy ---------- */
-  var stageSha=null, liveSha=null;
+  var stagedFiles=[];
   function smsg(kind,text){$("stageResult").innerHTML='<div class="msg '+kind+'">'+text+'</div>'}
   function checkStaged(){
     var B="https://api.github.com/repos/"+REPO+"/contents/";
@@ -440,12 +440,13 @@ a{color:var(--acc-deep)}
       fetch(B+"?ref=main").then(function(r){return r.json()}),
       fetch(B+"staging?ref=main").then(function(r){return r.ok?r.json():[]})
     ]).then(function(res){
-      var root=res[0], st=res[1];
-      var live=(root.find?root.find(function(f){return f.name==="index.html"}):null);
-      var staged=(st.find?st.find(function(f){return f.name==="index.html"}):null);
-      if(!live||!staged)return;
-      liveSha=live.sha; stageSha=staged.sha;
-      if(liveSha!==stageSha)$("stagePanel").classList.remove("hidden");
+      var root=res[0]||[], st=res[1]||[];
+      if(!st.filter)return;
+      stagedFiles=st.filter(function(f){return /\.html$/i.test(f.name)});   // every staged page, not just index
+      if(!stagedFiles.length)return;
+      var rootSha={}; if(root.forEach)root.forEach(function(f){rootSha[f.name]=f.sha});
+      var pending=stagedFiles.some(function(f){return rootSha[f.name]!==f.sha});   // any page new or changed vs. live
+      if(pending)$("stagePanel").classList.remove("hidden");
     }).catch(function(){});
   }
   $("stageView").addEventListener("click",function(){
@@ -455,9 +456,10 @@ a{color:var(--acc-deep)}
   $("stageDeploy").addEventListener("click",function(){
     var token=getToken()||($("token")?$("token").value.trim():"");
     if(!token){smsg("err","Paste the publish key first (in the Publish key box below).");return}
-    if(!stageSha){smsg("err","Nothing staged.");return}
+    if(!stagedFiles.length){smsg("err","Nothing staged.");return}
     var GB="https://api.github.com/repos/"+REPO;
     var H={Authorization:"Bearer "+token,Accept:"application/vnd.github+json","Content-Type":"application/json"};
+    var idx=stagedFiles.filter(function(f){return f.name==="index.html"})[0];
     smsg("ok","Deploying…");
     fetch(GB+"/git/ref/heads/main",{headers:H}).then(function(r){
       if(r.status===401||r.status===403){authFail();smsg("err","That publish key didn't work — paste a fresh one below and try again.");throw"handled"}
@@ -465,10 +467,11 @@ a{color:var(--acc-deep)}
     }).then(function(ref){
       var head=ref.object.sha;
       return fetch(GB+"/git/commits/"+head,{headers:H}).then(function(r){return r.json()}).then(function(c){
-        return fetch(GB+"/git/trees",{method:"POST",headers:H,body:JSON.stringify({base_tree:c.tree.sha,tree:[
-          {path:"index.html",mode:"100644",type:"blob",sha:stageSha},
-          {path:"404.html",mode:"100644",type:"blob",sha:stageSha}
-        ]})}).then(function(r){return r.json()}).then(function(t){
+        /* promote EVERY staged page (index.html, events.html, …) to the site root in one commit;
+           404.html mirrors the home page so any unknown deep link still lands on the site */
+        var tree=stagedFiles.map(function(f){return {path:f.name,mode:"100644",type:"blob",sha:f.sha}});
+        if(idx)tree.push({path:"404.html",mode:"100644",type:"blob",sha:idx.sha});
+        return fetch(GB+"/git/trees",{method:"POST",headers:H,body:JSON.stringify({base_tree:c.tree.sha,tree:tree})}).then(function(r){return r.json()}).then(function(t){
           return fetch(GB+"/git/commits",{method:"POST",headers:H,body:JSON.stringify({message:"Deploy staged site version (approved in shop admin)",tree:t.sha,parents:[head]})});
         }).then(function(r){return r.json()}).then(function(nc){
           return fetch(GB+"/git/refs/heads/main",{method:"PATCH",headers:H,body:JSON.stringify({sha:nc.sha})});
