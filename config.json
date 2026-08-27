@@ -68,10 +68,10 @@
       "live": true
     },
     {
-      "when": "Being reworked",
+      "when": "Every Sunday · 2 PM",
       "name": "Pokémon league",
-      "desc": "New league details drop on the socials soon.",
-      "live": false
+      "desc": "Pokémon TCG league play. Day and time are subject to change — check the socials.",
+      "live": true
     }
   ],
   "socials": {
