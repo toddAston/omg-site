@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-24T21:30:00Z",
+  "updatedAt": "2026-08-27T04:50:03.773Z",
   "announcement": {
     "enabled": false,
     "text": "",
@@ -82,6 +82,11 @@
     "facebook": "https://www.facebook.com/p/Off-Meta-Gaming-61579627653873/"
   },
   "gallery": [
+    {
+      "file": "photo-1787806130317.jpg",
+      "caption": "Front doors",
+      "added": "2026-08-27"
+    },
     {
       "file": "photo-1787629549173.jpg",
       "caption": "The play hall, ready for game night",
