@@ -375,7 +375,7 @@ main{position:relative;z-index:1}
 :root[data-skin="karp"] .hours{border-color:#C9A227;background-image:linear-gradient(135deg,rgba(255,80,40,.07),rgba(255,215,0,.12) 30%,rgba(255,255,200,.1) 50%,rgba(255,215,0,.12) 70%,rgba(200,120,0,.08))}
 :root[data-skin="karp"] h2{background:linear-gradient(100deg,#8F6A08 5%,#D4AF37 25%,#FFF3C2 40%,#D2461E 52%,#FFF3C2 64%,#D4AF37 78%,#8F6A08 95%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 3.5s linear infinite}
 :root[data-skin="karp"] .omg-sticker{background:linear-gradient(145deg,#B08D2A,#F5C33B 35%,#FFF3C2 50%,#F5C33B 65%,#B08D2A);border-color:#6E5511;animation:tw 3s ease-in-out infinite}
-:root[data-skin="karp"] .karps{display:block;position:fixed;inset:0;pointer-events:none;z-index:42;overflow:hidden}
+:root[data-skin="karp"] .karps{display:block;position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .karp{position:absolute;left:0;top:0;height:auto;overflow:visible;will-change:transform;transform:translate(-18vw,108vh);animation-name:karpfly;animation-timing-function:linear;animation-iteration-count:infinite}
 @keyframes karpfly{0%{transform:translate(-18vw,108vh) rotate(-30deg)}50%{transform:translate(48vw,42vh) rotate(180deg)}100%{transform:translate(118vw,-18vh) rotate(390deg)}}
 :root[data-skin="karp"] .karp-stamp{display:block;position:fixed;right:18px;bottom:18px;z-index:46;pointer-events:none;font-family:"IBM Plex Mono",monospace;font-weight:700;font-size:13px;letter-spacing:.18em;color:#4A3608;background:linear-gradient(120deg,#F5C33B,#FFF0B0,#F5C33B);border:2px solid #C23A14;padding:8px 14px;border-radius:6px;box-shadow:0 0 18px rgba(255,215,0,.6)}
