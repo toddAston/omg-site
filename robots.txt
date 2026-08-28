@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /staging/
+
+Sitemap: https://offmetagaming.net/sitemap.xml
