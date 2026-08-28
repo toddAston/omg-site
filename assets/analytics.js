@@ -7,7 +7,7 @@
    nothing — no banner, no tracking. */
 (function () {
   "use strict";
-  var GA_ID = "G-XXXXXXXXXX";            // <-- paste your GA4 Measurement ID here
+  var GA_ID = "G-CNG08NREB6";            // GA4 Measurement ID for offmetagaming.net
   var STORE_KEY = "omg-consent";          // "granted" | "denied"
 
   // Dormant until a real ID is set, so it's safe to ship ahead of time.
