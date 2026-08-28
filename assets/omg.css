@@ -622,4 +622,4 @@ a.card.linkcard h3{color:var(--acc-deep)}
 .cc-accept:hover{background:#38805D}
 .cc-decline{background:transparent;color:#EDECE6;border-color:rgba(255,255,255,.28)}
 .cc-decline:hover{border-color:rgba(255,255,255,.5)}
-@media (max-width:520px){.cc-banner{flex-direction:column;align-items:stretch}.cc-actions{justify-content:flex-end}}
+@media (max-width:520px){.cc-banner{flex-direction:column;align-items:stretch;gap:12px}.cc-text{flex:0 0 auto;min-width:0}.cc-actions{justify-content:flex-end}}
